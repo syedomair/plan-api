@@ -1,0 +1,5 @@
+psql -U khalid -d plan < table_def.sql
+
+heroku psql < table_def.sql
+
+psql --host=meem-db-instance.c8qfd5ux55rw.us-east-2.rds.amazonaws.com  --port=5432    --username khalid --password --dbname=plan  < table_def.sql
