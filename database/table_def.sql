@@ -25,8 +25,8 @@ CREATE TABLE public.users_logins(
 );
 
 
-drop table public.plan CASCADE;
-CREATE TABLE public.plan(
+drop table public.plans CASCADE;
+CREATE TABLE public.plans(
         id                  uuid PRIMARY KEY,
         title               varchar(100) NULL,
         status              smallint NULL DEFAULT 0,
@@ -36,15 +36,15 @@ CREATE TABLE public.plan(
         updated_at          timestamp
 );
 
-INSERT INTO public.plan (id, title, status, validity, cost) VALUES ('d107aa5c-9995-47b2-b34a-203ad655b621', 'Monthly Plan', 1, 30, 9999);
-INSERT INTO public.plan (id, title, status, validity, cost) VALUES ('c9de5200-dbad-44b8-b5fc-ab1381730de7', 'Weekly Plan', 1, 7, 4999);
-INSERT INTO public.plan (id, title, status, validity, cost) VALUES ('7be49965-fc69-4d15-ae53-aebcd7367402', 'Daily Plan', 1, 1, 1999);
+INSERT INTO public.plans (id, title, status, validity, cost) VALUES ('d107aa5c-9995-47b2-b34a-203ad655b621', 'Monthly Plan', 1, 30, 9999);
+INSERT INTO public.plans (id, title, status, validity, cost) VALUES ('c9de5200-dbad-44b8-b5fc-ab1381730de7', 'Weekly Plan', 1, 7, 4999);
+INSERT INTO public.plans (id, title, status, validity, cost) VALUES ('7be49965-fc69-4d15-ae53-aebcd7367402', 'Daily Plan', 1, 1, 1999);
 
 
 drop table public.plan_messages CASCADE;
 CREATE TABLE public.plan_messages (
         id                  uuid PRIMARY KEY,
-        plan_id             uuid references public.plan(id),
+        plan_id             uuid references public.plans(id),
         message             varchar(2000) NULL,
         action              varchar(20) NULL,
         created_at          timestamp,
