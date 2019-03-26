@@ -70,6 +70,13 @@ func (env *Env) NewRouter() *mux.Router {
 			env.StatEnv.GetUserRegData,
 			"admin",
 		},
+		Route{
+			"GetPlanData,",
+			"GET",
+			"/stats/plan-data",
+			env.StatEnv.GetPlanData,
+			"admin",
+		},
 		//Plan
 		Route{
 			"CreatePlan",

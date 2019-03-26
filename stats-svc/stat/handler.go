@@ -56,3 +56,25 @@ func (env *StatEnv) GetUserRegData(w http.ResponseWriter, r *http.Request) {
 	env.Common.SuccessResponseHelper(w, userRegData, http.StatusOK)
 
 }
+
+func (env *StatEnv) GetPlanData(w http.ResponseWriter, r *http.Request) {
+
+	start := time.Now()
+	env.Logger.Log("METHOD", "GetPlanData", "SPOT", "method start", "time_start", start)
+
+	_, err := env.Common.GetUserClientFromToken(r)
+	if err != nil {
+		env.Common.ErrorResponseHelper(w, "8001", err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	userCount, err := env.StatRepo.GetPlanData()
+	if err != nil {
+		env.Common.ErrorResponseHelper(w, "8003", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
+		return
+	}
+	responseUserCount := map[string]string{"user_total_count": userCount}
+	env.Logger.Log("METHOD", "GetPlanData", "SPOT", "method end", "time_spent", time.Since(start))
+	env.Common.SuccessResponseHelper(w, responseUserCount, http.StatusOK)
+
+}

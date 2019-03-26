@@ -11,6 +11,7 @@ import (
 type StatRepositoryInterface interface {
 	GetTotalUserCount() (string, error)
 	GetUserRegData() ([]*models.StatUserRegPerMonth, error)
+	GetPlanData() (string, error)
 }
 
 type StatRepository struct {
@@ -47,4 +48,20 @@ func (repo *StatRepository) GetUserRegData() ([]*models.StatUserRegPerMonth, err
 	repo.Logger.Log("METHOD", "GetUserRegData", "SPOT", "method end", "time_spent", time.Since(start))
 
 	return userRegs, nil
+}
+
+func (repo *StatRepository) GetPlanData() (string, error) {
+
+	start := time.Now()
+	repo.Logger.Log("METHOD", "GetPlanData", "SPOT", "method start", "time_start", start)
+	count := "0"
+	if err := repo.Db.Table("plans").
+		Select("*").
+		Count(&count).Error; err != nil {
+		return "", err
+	}
+
+	repo.Logger.Log("METHOD", "GetPlanData", "SPOT", "method end", "time_spent", time.Since(start))
+
+	return count, nil
 }
