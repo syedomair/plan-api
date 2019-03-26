@@ -11,11 +11,20 @@ CREATE TABLE public.users (
         created_at          timestamp,
         updated_at          timestamp
 );
-INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f6eebf36-fd66-4a71-a32f-8ea36d4617ef', 'FirstAdmin', 'LastAdmin', 'admin@gmail.com', 'MTIzNDU2', 1, '2018-03-14');
-INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a71-a32f-8ea36d4617ef', 'firstApplicant', 'lastApplicant', 'applicant@gmail.com', 'MTIzNDU2', 1, '2019-01-14');
-INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('8ef90caf-69a8-4247-945f-978094901c8c', 'firstClerk', 'lastClerk', 'clerk@gmail.com', 'MTIzNDU2', 1, '2019-03-14');
-INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('ba8ea792-328a-4215-be33-69623bbeda57', 'FirstManager', 'LastManager', 'manager@gmail.com', 'MTIzNDU2', 1, '2019-02-14');
-INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('24fc0c41-75e6-43aa-9781-b66a0d7ae0dd', 'firstApplicant1', 'lastApplicant1', 'applicant1@gmail.com', 'MTIzNDU2', 1, '2019-02-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f6eebf36-fd66-4a71-a32f-8ea36d4617ef', 'FirstAdmin1', 'LastAdmin1', 'admin@gmail.com', 'MTIzNDU2', 1, '2018-09-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a72-a32f-8ea36d4617ef', 'FirstAdmin2', 'lastAdmin2', 'admin2@gmail.com', 'MTIzNDU2', 1, '2019-01-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a73-a32f-8ea36d4617ef', 'FirstAdmin3', 'lastAdmin3', 'admin3@gmail.com', 'MTIzNDU2', 1, '2019-01-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a74-a32f-8ea36d4617ef', 'FirstAdmin4', 'lastAdmin4', 'admin4@gmail.com', 'MTIzNDU2', 1, '2018-06-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a75-a32f-8ea36d4617ef', 'FirstAdmin5', 'lastAdmin5', 'admin5@gmail.com', 'MTIzNDU2', 1, '2018-07-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a76-a32f-8ea36d4617ef', 'FirstAdmin6', 'lastAdmin6', 'admin6@gmail.com', 'MTIzNDU2', 1, '2018-08-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a77-a32f-8ea36d4617ef', 'FirstAdmin7', 'lastAdmin7', 'admin7@gmail.com', 'MTIzNDU2', 1, '2018-09-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a78-a32f-8ea36d4617ef', 'FirstAdmin8', 'lastAdmin8', 'admin8@gmail.com', 'MTIzNDU2', 1, '2018-10-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a79-a32f-8ea36d4617ef', 'FirstAdmin9', 'lastAdmin9', 'admin9@gmail.com', 'MTIzNDU2', 1, '2018-10-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a71-a32f-8ea46d4617ef', 'FirstAdmin10', 'lastAdmin10', 'admin10@gmail.com', 'MTIzNDU2', 1, '2018-11-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a71-a32f-8ea56d4617ef', 'FirstAdmin11', 'lastAdmin11', 'admin11@gmail.com', 'MTIzNDU2', 1, '2018-11-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a71-a32f-8ea66d4617ef', 'FirstAdmin12', 'lastAdmin12', 'admin12@gmail.com', 'MTIzNDU2', 1, '2018-11-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a71-a32f-8ea76d4617ef', 'FirstAdmin13', 'lastAdmin13', 'admin13@gmail.com', 'MTIzNDU2', 1, '2018-11-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a71-a32f-8ea86d4617ef', 'FirstAdmin14', 'lastAdmin14', 'admin14@gmail.com', 'MTIzNDU2', 1, '2018-12-14');
 
 drop table public.users_logins CASCADE;
 CREATE TABLE public.users_logins(
