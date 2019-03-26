@@ -129,6 +129,10 @@ func main() {
 		{"DELETE", url, "plan-messages", "plan_message_id", "token", ``, lib.SUCCESS, ``},
 		//num140 plan delete
 		{"DELETE", url, "plans", "plan_id", "token", ``, lib.SUCCESS, ``},
+		//num141 stats
+		{"GET", url, "stats/user-count", "", "token", ``, lib.SUCCESS, ``},
+		//num142 stats
+		{"GET", url, "stats/user-reg-data", "", "token", ``, lib.SUCCESS, ``},
 		/*
 		 */
 	}

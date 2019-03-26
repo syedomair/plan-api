@@ -11,11 +11,11 @@ CREATE TABLE public.users (
         created_at          timestamp,
         updated_at          timestamp
 );
-INSERT INTO public.users (id, first_name, last_name, email, password, verified) VALUES ('f6eebf36-fd66-4a71-a32f-8ea36d4617ef', 'FirstAdmin', 'LastAdmin', 'admin@gmail.com', 'MTIzNDU2', 1);
-INSERT INTO public.users (id, first_name, last_name, email, password, verified) VALUES ('f7eebf36-fd66-4a71-a32f-8ea36d4617ef', 'firstApplicant', 'lastApplicant', 'applicant@gmail.com', 'MTIzNDU2', 1);
-INSERT INTO public.users (id, first_name, last_name, email, password, verified) VALUES ('8ef90caf-69a8-4247-945f-978094901c8c', 'firstClerk', 'lastClerk', 'clerk@gmail.com', 'MTIzNDU2', 1);
-INSERT INTO public.users (id, first_name, last_name, email, password, verified) VALUES ('ba8ea792-328a-4215-be33-69623bbeda57', 'FirstManager', 'LastManager', 'manager@gmail.com', 'MTIzNDU2', 1);
-INSERT INTO public.users (id, first_name, last_name, email, password, verified) VALUES ('24fc0c41-75e6-43aa-9781-b66a0d7ae0dd', 'firstApplicant1', 'lastApplicant1', 'applicant1@gmail.com', 'MTIzNDU2', 1);
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f6eebf36-fd66-4a71-a32f-8ea36d4617ef', 'FirstAdmin', 'LastAdmin', 'admin@gmail.com', 'MTIzNDU2', 1, '2018-03-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a71-a32f-8ea36d4617ef', 'firstApplicant', 'lastApplicant', 'applicant@gmail.com', 'MTIzNDU2', 1, '2019-01-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('8ef90caf-69a8-4247-945f-978094901c8c', 'firstClerk', 'lastClerk', 'clerk@gmail.com', 'MTIzNDU2', 1, '2019-03-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('ba8ea792-328a-4215-be33-69623bbeda57', 'FirstManager', 'LastManager', 'manager@gmail.com', 'MTIzNDU2', 1, '2019-02-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('24fc0c41-75e6-43aa-9781-b66a0d7ae0dd', 'firstApplicant1', 'lastApplicant1', 'applicant1@gmail.com', 'MTIzNDU2', 1, '2019-02-14');
 
 drop table public.users_logins CASCADE;
 CREATE TABLE public.users_logins(

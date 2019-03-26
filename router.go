@@ -55,6 +55,21 @@ func (env *Env) NewRouter() *mux.Router {
 			env.UserEnv.GetAll,
 			"admin",
 		},
+		//Stat
+		Route{
+			"GetTotalUserCount,",
+			"GET",
+			"/stats/user-count",
+			env.StatEnv.GetTotalUserCount,
+			"admin",
+		},
+		Route{
+			"GetUserRegData,",
+			"GET",
+			"/stats/user-reg-data",
+			env.StatEnv.GetUserRegData,
+			"admin",
+		},
 		//Plan
 		Route{
 			"CreatePlan",

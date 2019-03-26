@@ -13,6 +13,7 @@ import (
 	plan "github.com/syedomair/plan-api/plans-svc/plan"
 	planMessage "github.com/syedomair/plan-api/plnmsgs-svc/plnmsg"
 	public "github.com/syedomair/plan-api/public-svc/public"
+	stat "github.com/syedomair/plan-api/stats-svc/stat"
 	user "github.com/syedomair/plan-api/users-svc/user"
 )
 
@@ -23,6 +24,7 @@ type Env struct {
 	PlanEnv        plan.PlanEnv
 	PlanMessageEnv planMessage.PlanMessageEnv
 	UserEnv        user.UserEnv
+	StatEnv        stat.StatEnv
 }
 
 func main() {
@@ -38,6 +40,7 @@ func main() {
 	fmt.Println("application running on port: " + os.Getenv("PORT"))
 
 	logger := lib.GetLogger()
+	statRepository := &stat.StatRepository{db, logger}
 	publicRepository := &public.PublicRepository{db, logger}
 	userRepository := &user.UserRepository{db, logger}
 	planRepository := &plan.PlanRepository{db, logger}
@@ -46,11 +49,13 @@ func main() {
 
 	publicEnv := &public.PublicEnv{logger, publicRepository, commonService}
 	userEnv := &user.UserEnv{logger, userRepository, commonService}
+	statEnv := &stat.StatEnv{logger, statRepository, commonService}
 	planEnv := &plan.PlanEnv{logger, planRepository, commonService}
 	planMessageEnv := &planMessage.PlanMessageEnv{logger, PlanMessageRepository, commonService}
 
 	env := &Env{PublicEnv: *publicEnv,
 		UserEnv:        *userEnv,
+		StatEnv:        *statEnv,
 		PlanEnv:        *planEnv,
 		PlanMessageEnv: *planMessageEnv,
 		Common:         commonService,
