@@ -12,7 +12,7 @@ import (
 
 func CreateDBConnection() (*gorm.DB, error) {
 	//return gorm.Open("postgres", "postgres://"+os.Getenv("SECRET_USERNAME")+":"+os.Getenv("SECRET_PASSWORD")+"@"+os.Getenv("DB_SERVER")+":5432/meem1")
-	return gorm.Open("postgres", os.Getenv("DATABASE_URL_PLAN"))
+	return gorm.Open("postgres", os.Getenv("DATABASE_URL"))
 }
 
 func CreateNATSConnection() (*nats.Conn, error) {
