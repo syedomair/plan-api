@@ -36,7 +36,7 @@ func main() {
 		fmt.Println("Command line argument: ", arg)
 	}
 
-	url := "https://meem-workflow.herokuapp.com/"
+	url := "https://plans-api.herokuapp.com/"
 	if arg == "local" {
 		url = "http://localhost:8180/"
 	}
