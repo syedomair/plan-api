@@ -46,7 +46,7 @@ func (repo *PlanRepository) Create(inputPlan map[string]interface{}) (string, er
 		validity, _ = strconv.Atoi(validityValue.(string))
 	}
 
-	id := uuid.NewV4()
+	id, _ := uuid.NewV4()
 	planId := id.String()
 	newPlan := &models.Plan{
 		Id:        planId,

@@ -36,7 +36,7 @@ func (repo *PlanMessageRepository) Create(inputPlanMsg map[string]interface{}, p
 	if actionValue, ok := inputPlanMsg["action"]; ok {
 		action = actionValue.(string)
 	}
-	id := uuid.NewV4()
+	id, _ := uuid.NewV4()
 	planMessageId := id.String()
 	newPlanMessage := &models.PlanMessage{
 		Id:        planMessageId,

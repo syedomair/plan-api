@@ -41,7 +41,7 @@ func (repo *PublicRepository) CreateUser(inputUser map[string]interface{}) (*mod
 	repo.Logger.Log("METHOD", "CreateUser", "SPOT", "method start")
 	start := time.Now()
 
-	id := uuid.NewV4()
+	id, _ := uuid.NewV4()
 	userId := id.String()
 	password := b64.StdEncoding.EncodeToString([]byte(inputUser["password"].(string)))
 	user := models.User{
