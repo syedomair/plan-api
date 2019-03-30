@@ -64,6 +64,13 @@ func (env *Env) NewRouter() *mux.Router {
 			"admin",
 		},
 		Route{
+			"GetTotalUserCountLast30Days,",
+			"GET",
+			"/stats/user-count-30-days",
+			env.StatEnv.GetTotalUserCountLast30Days,
+			"admin",
+		},
+		Route{
 			"GetUserRegData,",
 			"GET",
 			"/stats/user-reg-data",

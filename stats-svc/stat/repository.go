@@ -10,6 +10,7 @@ import (
 
 type StatRepositoryInterface interface {
 	GetTotalUserCount() (string, error)
+	GetTotalUserCountLast30Days() (string, error)
 	GetUserRegData() ([]*models.StatUserRegPerMonth, error)
 	GetPlanData() (string, error)
 }
@@ -19,6 +20,20 @@ type StatRepository struct {
 	Logger log.Logger
 }
 
+func (repo *StatRepository) GetTotalUserCountLast30Days() (string, error) {
+
+	start := time.Now()
+	repo.Logger.Log("METHOD", "GetTotalUserCountLast30Days", "SPOT", "method start", "time_start", start)
+	type Result struct {
+		Count string
+	}
+	var result Result
+	if err := repo.Db.Raw("select count(*) as count from users where created_at >= NOW() - interval '30 day'").Scan(&result).Error; err != nil {
+		return "", err
+	}
+	repo.Logger.Log("METHOD", "GetTotalUserCountLast30Days", "SPOT", "method end", "time_spent", time.Since(start))
+	return result.Count, nil
+}
 func (repo *StatRepository) GetTotalUserCount() (string, error) {
 
 	start := time.Now()
@@ -29,14 +44,7 @@ func (repo *StatRepository) GetTotalUserCount() (string, error) {
 		Count(&count).Error; err != nil {
 		return "", err
 	}
-	/*
-		SELECT *
-		  FROM demo.orders
-		   WHERE occurred_at >= NOW() - interval '12 hour'
-	*/
-
 	repo.Logger.Log("METHOD", "GetTotalUserCount", "SPOT", "method end", "time_spent", time.Since(start))
-
 	return count, nil
 }
 

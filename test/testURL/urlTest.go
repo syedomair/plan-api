@@ -131,9 +131,11 @@ func main() {
 		{"DELETE", url, "plans", "plan_id", "token", ``, lib.SUCCESS, ``},
 		//num141 stats total user count
 		{"GET", url, "stats/user-count", "", "token", ``, lib.SUCCESS, ``},
-		//num142 stats user registration data
+		//num142 stats total user count last 30 days
+		{"GET", url, "stats/user-count-30-days", "", "token", ``, lib.SUCCESS, ``},
+		//num143 stats user registration data
 		{"GET", url, "stats/user-reg-data", "", "token", ``, lib.SUCCESS, ``},
-		//num143 stats plan data
+		//num144 stats plan data
 		{"GET", url, "stats/plan-data", "", "token", ``, lib.SUCCESS, ``},
 		/*
 		 */

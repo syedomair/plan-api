@@ -14,10 +14,10 @@ type StatEnv struct {
 	Common   lib.CommonService
 }
 
-func (env *StatEnv) GetTotalUserCount(w http.ResponseWriter, r *http.Request) {
+func (env *StatEnv) GetTotalUserCountLast30Days(w http.ResponseWriter, r *http.Request) {
 
 	start := time.Now()
-	env.Logger.Log("METHOD", "GetTotalUserCount", "SPOT", "method start", "time_start", start)
+	env.Logger.Log("METHOD", "GetTotalUserCountLast30Days", "SPOT", "method start", "time_start", start)
 
 	_, err := env.Common.GetUserClientFromToken(r)
 	if err != nil {
@@ -25,9 +25,30 @@ func (env *StatEnv) GetTotalUserCount(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	userCount, err := env.StatRepo.GetTotalUserCount()
+	userCount, err := env.StatRepo.GetTotalUserCountLast30Days()
 	if err != nil {
 		env.Common.ErrorResponseHelper(w, "5002", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
+		return
+	}
+	responseUserCount := map[string]string{"user_total_count": userCount}
+	env.Logger.Log("METHOD", "GetTotalUserCountLast30Days", "SPOT", "method end", "time_spent", time.Since(start))
+	env.Common.SuccessResponseHelper(w, responseUserCount, http.StatusOK)
+
+}
+func (env *StatEnv) GetTotalUserCount(w http.ResponseWriter, r *http.Request) {
+
+	start := time.Now()
+	env.Logger.Log("METHOD", "GetTotalUserCount", "SPOT", "method start", "time_start", start)
+
+	_, err := env.Common.GetUserClientFromToken(r)
+	if err != nil {
+		env.Common.ErrorResponseHelper(w, "5003", err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	userCount, err := env.StatRepo.GetTotalUserCount()
+	if err != nil {
+		env.Common.ErrorResponseHelper(w, "5004", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
 		return
 	}
 	responseUserCount := map[string]string{"user_total_count": userCount}
@@ -43,13 +64,13 @@ func (env *StatEnv) GetUserRegData(w http.ResponseWriter, r *http.Request) {
 
 	_, err := env.Common.GetUserClientFromToken(r)
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5003", err.Error(), http.StatusBadRequest)
+		env.Common.ErrorResponseHelper(w, "5005", err.Error(), http.StatusBadRequest)
 		return
 	}
 
 	userRegData, err := env.StatRepo.GetUserRegData()
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5004", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
+		env.Common.ErrorResponseHelper(w, "5006", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
 		return
 	}
 	env.Logger.Log("METHOD", "GetUserRegData", "SPOT", "method end", "time_spent", time.Since(start))
@@ -64,13 +85,13 @@ func (env *StatEnv) GetPlanData(w http.ResponseWriter, r *http.Request) {
 
 	_, err := env.Common.GetUserClientFromToken(r)
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5005", err.Error(), http.StatusBadRequest)
+		env.Common.ErrorResponseHelper(w, "5007", err.Error(), http.StatusBadRequest)
 		return
 	}
 
 	userCount, err := env.StatRepo.GetPlanData()
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5006", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
+		env.Common.ErrorResponseHelper(w, "5008", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
 		return
 	}
 	responseUserCount := map[string]string{"plan_total_count": userCount}
