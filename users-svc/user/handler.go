@@ -38,3 +38,5 @@ func (env *UserEnv) GetAll(w http.ResponseWriter, r *http.Request) {
 	env.Logger.Log("METHOD", "GetAll", "SPOT", "method end", "time_spent", time.Since(start))
 	env.Common.SuccessResponseList(w, users, offset, limit, count)
 }
+
+//VIM command to serializing error code :let @a=2001 | %s/\d\d\d\d/\=''.(@a+setreg('a',@a+1))/g

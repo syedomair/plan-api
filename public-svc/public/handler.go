@@ -32,9 +32,6 @@ func (env *PublicEnv) Register(w http.ResponseWriter, r *http.Request) {
 	env.Logger.Log("METHOD", "Register", "SPOT", "method start")
 	start := time.Now()
 
-	//pathParams := mux.Vars(r)
-	//apiKey := pathParams["api_key"]
-
 	var paramConf map[string]models.ParamConf
 	paramConf = make(map[string]models.ParamConf)
 	paramConf["first_name"] = models.ParamConf{Required: true, Type: lib.STRING_NAME, EmptyAllowed: false}
@@ -50,13 +47,13 @@ func (env *PublicEnv) Register(w http.ResponseWriter, r *http.Request) {
 
 	err = env.PublicRepo.IsEmailUnique(paramMap["email"].(string))
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "1015", err.Error(), http.StatusBadRequest)
+		env.Common.ErrorResponseHelper(w, "1001", err.Error(), http.StatusBadRequest)
 		return
 	}
 
 	user, err := env.PublicRepo.CreateUser(paramMap)
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "1017", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
+		env.Common.ErrorResponseHelper(w, "1002", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
 		return
 	}
 	env.Logger.Log("METHOD", "Register", "SPOT", "Register", "userId", user.Id)
@@ -65,7 +62,7 @@ func (env *PublicEnv) Register(w http.ResponseWriter, r *http.Request) {
 	responseToken := map[string]string{"token": signedJwtToken}
 	err = env.PublicRepo.CreateUserLogin(user.Id, signedJwtToken)
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "1020", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
+		env.Common.ErrorResponseHelper(w, "1003", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
 		return
 	}
 	env.Logger.Log("METHOD", "Register", "SPOT", "METHOD END", "time_spent", time.Since(start))
@@ -90,7 +87,7 @@ func (env *PublicEnv) Login(w http.ResponseWriter, r *http.Request) {
 
 	user, err := env.PublicRepo.ValidateEmailPasswordFromDB(paramMap["email"].(string), paramMap["password"].(string))
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "1024", "Invalid email or password", http.StatusUnauthorized)
+		env.Common.ErrorResponseHelper(w, "1004", "Invalid email or password", http.StatusUnauthorized)
 		return
 	}
 
@@ -99,7 +96,7 @@ func (env *PublicEnv) Login(w http.ResponseWriter, r *http.Request) {
 
 	err = env.PublicRepo.CreateUserLogin(user.Id, signedJwtToken)
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "1029", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
+		env.Common.ErrorResponseHelper(w, "1005", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
 		return
 	}
 	env.Logger.Log("METHOD", "Login", "SPOT", "METHOD END", "time_spent", time.Since(start))
@@ -131,3 +128,5 @@ func createUserToken(user *models.User) string {
 	signedJwtToken, _ := token.SignedString(signingKey)
 	return signedJwtToken
 }
+
+//VIM command for serializing error code :let @a=1001 | %s/\d\d\d\d/\=''.(@a+setreg('a',@a+1))/g

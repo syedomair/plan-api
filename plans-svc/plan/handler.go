@@ -23,7 +23,7 @@ func (env *PlanEnv) CreatePlan(w http.ResponseWriter, r *http.Request) {
 	_, err := env.Common.GetUserClientFromToken(r)
 
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5011", err.Error(), http.StatusBadRequest)
+		env.Common.ErrorResponseHelper(w, "3001", err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -45,7 +45,7 @@ func (env *PlanEnv) CreatePlan(w http.ResponseWriter, r *http.Request) {
 
 	planId, err := env.PlanRepo.Create(paramMap)
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5019", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
+		env.Common.ErrorResponseHelper(w, "3002", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
 	}
 
 	responsePlanId := map[string]string{"plan_id": planId}
@@ -61,18 +61,18 @@ func (env *PlanEnv) GetAll(w http.ResponseWriter, r *http.Request) {
 
 	_, err := env.Common.GetUserClientFromToken(r)
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5020", err.Error(), http.StatusBadRequest)
+		env.Common.ErrorResponseHelper(w, "3003", err.Error(), http.StatusBadRequest)
 		return
 	}
 
 	limit, offset, orderby, sort, err := env.Common.ValidateQueryString(r, "100", "0", "created_at", "asc")
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5021", err.Error(), http.StatusBadRequest)
+		env.Common.ErrorResponseHelper(w, "3004", err.Error(), http.StatusBadRequest)
 		return
 	}
 	plans, count, err := env.PlanRepo.GetAll(limit, offset, orderby, sort)
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5022", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
+		env.Common.ErrorResponseHelper(w, "3005", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
 	}
 	env.Logger.Log("METHOD", "GetAll", "SPOT", "method end", "time_spent", time.Since(start))
 	env.Common.SuccessResponseList(w, plans, offset, limit, count)
@@ -83,19 +83,19 @@ func (env *PlanEnv) Get(w http.ResponseWriter, r *http.Request) {
 	env.Logger.Log("METHOD", "Get", "SPOT", "method start", "time_start", start)
 	_, err := env.Common.GetUserClientFromToken(r)
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5023", err.Error(), http.StatusBadRequest)
+		env.Common.ErrorResponseHelper(w, "3006", err.Error(), http.StatusBadRequest)
 		return
 	}
 	pathParams := mux.Vars(r)
 	planId := pathParams["plan_id"]
 
 	if err := env.Common.ValidateId(planId, "plan_id"); err != nil {
-		env.Common.ErrorResponseHelper(w, "5024", err.Error(), http.StatusBadRequest)
+		env.Common.ErrorResponseHelper(w, "3007", err.Error(), http.StatusBadRequest)
 		return
 	}
 	plan, err := env.PlanRepo.Get(planId)
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5025", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
+		env.Common.ErrorResponseHelper(w, "3008", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
 		return
 	}
 	env.Logger.Log("METHOD", "Get", "SPOT", "method end", "time_spent", time.Since(start))
@@ -108,7 +108,7 @@ func (env *PlanEnv) Update(w http.ResponseWriter, r *http.Request) {
 	env.Logger.Log("METHOD", "Update", "SPOT", "method start", "time_start", start)
 	_, err := env.Common.GetUserClientFromToken(r)
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5026", err.Error(), http.StatusBadRequest)
+		env.Common.ErrorResponseHelper(w, "3009", err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -133,7 +133,7 @@ func (env *PlanEnv) Update(w http.ResponseWriter, r *http.Request) {
 
 	err = env.PlanRepo.Update(paramMap, planId)
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5034", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
+		env.Common.ErrorResponseHelper(w, "3010", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
 		return
 	}
 	responsePlanId := map[string]string{"plan_id": planId}
@@ -148,13 +148,13 @@ func (env *PlanEnv) Delete(w http.ResponseWriter, r *http.Request) {
 
 	_, err := env.Common.GetUserClientFromToken(r)
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5035", err.Error(), http.StatusBadRequest)
+		env.Common.ErrorResponseHelper(w, "3011", err.Error(), http.StatusBadRequest)
 		return
 	}
 	pathParams := mux.Vars(r)
 	planId := pathParams["plan_id"]
 	if err := env.Common.ValidateId(planId, "plan_id"); err != nil {
-		env.Common.ErrorResponseHelper(w, "5036", err.Error(), http.StatusBadRequest)
+		env.Common.ErrorResponseHelper(w, "3012", err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -163,7 +163,7 @@ func (env *PlanEnv) Delete(w http.ResponseWriter, r *http.Request) {
 
 	err = env.PlanRepo.Delete(plan)
 	if err != nil {
-		env.Common.ErrorResponseHelper(w, "5037", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
+		env.Common.ErrorResponseHelper(w, "3013", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
 		return
 	}
 
@@ -171,3 +171,5 @@ func (env *PlanEnv) Delete(w http.ResponseWriter, r *http.Request) {
 	env.Logger.Log("METHOD", "Delete", "SPOT", "method end", "time_spent", time.Since(start))
 	env.Common.SuccessResponseHelper(w, responsePlanId, http.StatusOK)
 }
+
+//VIM command to serializing error code :let @a=3001 | %s/\d\d\d\d/\=''.(@a+setreg('a',@a+1))/g
