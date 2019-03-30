@@ -12,7 +12,7 @@ import (
 
 type PlanMessageRepositoryInterface interface {
 	Create(inputPlanMsg map[string]interface{}, planId string) (string, error)
-	GetAll(limit string, offset string, orderby string, sort string) ([]*models.PlanMessage, string, error)
+	GetAll(limit string, offset string, orderby string, sort string, planId string) ([]*models.PlanMessage, string, error)
 	Get(planMessageId string) (*models.PlanMessage, error)
 	Update(inputPlanMsg map[string]interface{}, planMessageId string) error
 	Delete(planMessage models.PlanMessage) error
@@ -53,7 +53,7 @@ func (repo *PlanMessageRepository) Create(inputPlanMsg map[string]interface{}, p
 	return planMessageId, nil
 }
 
-func (repo *PlanMessageRepository) GetAll(limit string, offset string, orderby string, sort string) ([]*models.PlanMessage, string, error) {
+func (repo *PlanMessageRepository) GetAll(limit string, offset string, orderby string, sort string, planId string) ([]*models.PlanMessage, string, error) {
 
 	start := time.Now()
 	repo.Logger.Log("METHOD", "GetAll", "SPOT", "method start", "time_start", start)
@@ -64,7 +64,8 @@ func (repo *PlanMessageRepository) GetAll(limit string, offset string, orderby s
 		Count(&count).
 		Limit(limit).
 		Offset(offset).
-		Order(orderby + " " + sort).
+		Order(orderby+" "+sort).
+		Where("plan_id = ?", planId).
 		Scan(&planMessages).Error; err != nil {
 		return nil, "", err
 	}

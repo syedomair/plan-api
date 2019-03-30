@@ -29,6 +29,11 @@ func (repo *StatRepository) GetTotalUserCount() (string, error) {
 		Count(&count).Error; err != nil {
 		return "", err
 	}
+	/*
+		SELECT *
+		  FROM demo.orders
+		   WHERE occurred_at >= NOW() - interval '12 hour'
+	*/
 
 	repo.Logger.Log("METHOD", "GetTotalUserCount", "SPOT", "method end", "time_spent", time.Since(start))
 

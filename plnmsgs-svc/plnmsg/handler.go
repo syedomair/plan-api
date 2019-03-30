@@ -34,7 +34,7 @@ func (env *PlanMessageEnv) Create(w http.ResponseWriter, r *http.Request) {
 	var paramConf map[string]models.ParamConf
 	paramConf = make(map[string]models.ParamConf)
 	paramConf["message"] = models.ParamConf{Required: true, Type: lib.STRING_LARGE, EmptyAllowed: false}
-	paramConf["action"] = models.ParamConf{Required: false, Type: lib.STRING_SMALL, EmptyAllowed: false}
+	paramConf["action"] = models.ParamConf{Required: true, Type: lib.STRING_SMALL, EmptyAllowed: false}
 
 	pathParamValue, paramMap, errCode, err := env.Common.ValidateInputParameters(r, paramConf, pathParamConf)
 	if err != nil {
@@ -66,13 +66,19 @@ func (env *PlanMessageEnv) GetAll(w http.ResponseWriter, r *http.Request) {
 		env.Common.ErrorResponseHelper(w, "6010", err.Error(), http.StatusBadRequest)
 		return
 	}
+	pathParams := mux.Vars(r)
+	planId := pathParams["plan_id"]
+	if err := env.Common.ValidateId(planId, "plan_id"); err != nil {
+		env.Common.ErrorResponseHelper(w, "6002", err.Error(), http.StatusBadRequest)
+		return
+	}
 
 	limit, offset, orderby, sort, err := env.Common.ValidateQueryString(r, "100", "0", "created_at", "asc")
 	if err != nil {
 		env.Common.ErrorResponseHelper(w, "6011", err.Error(), http.StatusBadRequest)
 		return
 	}
-	planMessages, count, err := env.PlanMessageRepo.GetAll(limit, offset, orderby, sort)
+	planMessages, count, err := env.PlanMessageRepo.GetAll(limit, offset, orderby, sort, planId)
 	if err != nil {
 		env.Common.ErrorResponseHelper(w, "6012", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
 	}
@@ -120,7 +126,7 @@ func (env *PlanMessageEnv) Update(w http.ResponseWriter, r *http.Request) {
 	var paramConf map[string]models.ParamConf
 	paramConf = make(map[string]models.ParamConf)
 	paramConf["message"] = models.ParamConf{Required: true, Type: lib.STRING_LARGE, EmptyAllowed: false}
-	paramConf["action"] = models.ParamConf{Required: false, Type: lib.STRING_SMALL, EmptyAllowed: false}
+	paramConf["action"] = models.ParamConf{Required: true, Type: lib.STRING_SMALL, EmptyAllowed: false}
 
 	pathParamValue, paramMap, errCode, err := env.Common.ValidateInputParameters(r, paramConf, pathParamConf)
 	if err != nil {
