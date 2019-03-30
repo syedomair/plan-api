@@ -4,12 +4,10 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"reflect"
-	"regexp"
 	"strconv"
 
 	"github.com/syedomair/plan-api/models"
@@ -99,11 +97,14 @@ func (c CommonService) checkBooleanValue(value interface{}) error {
 	}
 	return nil
 }
-func (c CommonService) checkNetworkNameValue(value interface{}) error {
+func (c CommonService) checkActionNameValue(value interface{}) error {
+	m := make(map[string]string)
+	m["COST_UPDATE"] = "COST_UPDATE"
+	m["VALIDITY_UPDATE"] = "VALIDITY_UPDATE"
 
-	isAlphaNum := regexp.MustCompile(`^[A-Za-z0123456789]+$`).MatchString
-	if !isAlphaNum(value.(string)) {
-		return errors.New("must be a alpha-numeric string")
+	_, exists := m[value.(string)]
+	if !exists {
+		return errors.New("action value can only be COST_UPDATE, VALIDITY_UPDATE")
 	}
 
 	return nil
@@ -128,15 +129,8 @@ func (c CommonService) ValidateInputParameters(r *http.Request, paramConf map[st
 		}
 	}
 
-	fmt.Println("Commmon parameter-------------------------------.1")
 	for k, v := range paramConf {
-		fmt.Println("------------------------", k)
-		fmt.Println("paramConf key:", k)
-		fmt.Println("paramConf value Type:", v.Type)
-		fmt.Println("paramConf value EmptyAllowed:", v.EmptyAllowed)
-		fmt.Println("paramConf value Required:", v.Required)
 		if val, ok := jsonMap[k]; ok {
-			fmt.Println("json value :", val)
 			if reflect.TypeOf(val).String() != "string" {
 				return nil, nil, "104", errors.New(k + " must be a valid string parameter")
 			}
@@ -160,95 +154,89 @@ func (c CommonService) ValidateInputParameters(r *http.Request, paramConf map[st
 				if err := validation.Validate(
 					val,
 					validation.Length(1, 1000).Error(k+" allowed with max character of 1000")); err != nil {
-					return nil, nil, "106", err
+					return nil, nil, "107", err
 				}
 
 			case INT:
 				if err := validation.Validate(
 					val,
 					is.Int.Error(k+" must be a valid integer")); err != nil {
-					return nil, nil, "107", err
+					return nil, nil, "108", err
 				}
 			case INT_ACCESS_LEVEL:
 				if err := validation.Validate(
 					val,
 					is.Int.Error(k+" must be a valid integer")); err != nil {
-					return nil, nil, "108", err
+					return nil, nil, "109", err
 				} else if err := validation.Validate(
 					val,
 					validation.By(c.checkAccessLevelValue)); err != nil {
-					return nil, nil, "109", errors.New(k + " " + err.Error())
+					return nil, nil, "110", errors.New(k + " " + err.Error())
 				}
 			case INT_BOOLEAN:
 				if err := validation.Validate(
 					val,
 					is.Int.Error(k+" must be a valid integer")); err != nil {
-					return nil, nil, "110", err
+					return nil, nil, "111", err
 				} else if err := validation.Validate(
 					val,
 					validation.By(c.checkBooleanValue)); err != nil {
-					return nil, nil, "111", errors.New(k + " " + err.Error())
+					return nil, nil, "112", errors.New(k + " " + err.Error())
 				}
 			case ID:
 				if val != "00000000-0000-0000-0000-000000000000" {
 					if err := validation.Validate(
 						val,
 						is.UUIDv4.Error(k+" invalid ID")); err != nil {
-						return nil, nil, "112", err
+						return nil, nil, "113", err
 					}
 				}
 			case STRING_EMAIL:
 				if err := validation.Validate(
 					val,
 					is.Email.Error(k+" must be a valid email address")); err != nil {
-					return nil, nil, "113", err
+					return nil, nil, "114", err
 				}
 			case STRING_PASSWORD:
 				if err := validation.Validate(
 					val,
 					validation.Length(6, 32).Error(k+" must be atleast 5 characters long")); err != nil {
-					return nil, nil, "114", err
+					return nil, nil, "115", err
 				}
 			case STRING_NAME:
 				if err := validation.Validate(
 					val,
 					validation.Length(1, 50).Error(k+" field size cannot be  greater than 50 characters")); err != nil {
-					return nil, nil, "108", err
+					return nil, nil, "116", err
 				}
-			case STRING_NETWORK_NAME:
+			case STRING_ACTION_NAME:
 				if err := validation.Validate(
 					val,
-					validation.By(c.checkNetworkNameValue)); err != nil {
-					return nil, nil, "109", errors.New(k + " " + err.Error())
+					validation.By(c.checkActionNameValue)); err != nil {
+					return nil, nil, "117", errors.New(k + " " + err.Error())
 				}
 			}
 
 		} else {
 			if v.Required {
-				return nil, nil, "109", errors.New(k + " is a requird field")
+				return nil, nil, "118", errors.New(k + " is a requird field")
 			}
 		}
 
 	}
-	fmt.Println("Commmon parameter-------------------------------.2")
-	fmt.Println("Commmon path parameter-------------------------------.1")
 
 	pathParams := mux.Vars(r)
 	for k, _ := range pathParamConf {
 		tempId := pathParams[k]
-		fmt.Println("key: ", k)
-		fmt.Println("tempId: ", tempId)
 
 		if err := validation.Validate(
 			tempId,
 			is.UUIDv4.Error(k+" invalid ID")); err != nil {
-			return nil, nil, "108", err
+			return nil, nil, "119", err
 		}
 		pathParamConf[k] = tempId
 
 	}
-
-	fmt.Println("Commmon path parameter-------------------------------.2")
 
 	return pathParamConf, jsonMap, "", nil
 }

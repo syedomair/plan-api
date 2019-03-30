@@ -34,7 +34,7 @@ func (env *PlanMessageEnv) Create(w http.ResponseWriter, r *http.Request) {
 	var paramConf map[string]models.ParamConf
 	paramConf = make(map[string]models.ParamConf)
 	paramConf["message"] = models.ParamConf{Required: true, Type: lib.STRING_LARGE, EmptyAllowed: false}
-	paramConf["action"] = models.ParamConf{Required: true, Type: lib.STRING_SMALL, EmptyAllowed: false}
+	paramConf["action"] = models.ParamConf{Required: true, Type: lib.STRING_ACTION_NAME, EmptyAllowed: false}
 
 	pathParamValue, paramMap, errCode, err := env.Common.ValidateInputParameters(r, paramConf, pathParamConf)
 	if err != nil {
@@ -126,7 +126,7 @@ func (env *PlanMessageEnv) Update(w http.ResponseWriter, r *http.Request) {
 	var paramConf map[string]models.ParamConf
 	paramConf = make(map[string]models.ParamConf)
 	paramConf["message"] = models.ParamConf{Required: true, Type: lib.STRING_LARGE, EmptyAllowed: false}
-	paramConf["action"] = models.ParamConf{Required: true, Type: lib.STRING_SMALL, EmptyAllowed: false}
+	paramConf["action"] = models.ParamConf{Required: true, Type: lib.STRING_ACTION_NAME, EmptyAllowed: false}
 
 	pathParamValue, paramMap, errCode, err := env.Common.ValidateInputParameters(r, paramConf, pathParamConf)
 	if err != nil {

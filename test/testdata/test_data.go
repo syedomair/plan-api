@@ -38,6 +38,6 @@ const (
 	InValidPlanValidity           = "a"
 	ValidPlanMessage              = "Plan Message  #FIRST_NAME#    "
 	InValidPlanMessageBlank       = ""
-	ValidPlanMessageAction        = "PLAN_UPDATED"
+	ValidPlanMessageAction        = "COST_UPDATE"
 	InValidPlanMessageActionBlank = ""
 )
