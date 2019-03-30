@@ -73,10 +73,10 @@ func (repo *PlanRepository) GetAll(limit string, offset string, orderby string, 
 	count := "0"
 	if err := repo.Db.Table("plans").
 		Select("*").
-		Count(&count).
 		Limit(limit).
 		Offset(offset).
 		Order("plans." + orderby + " " + sort).
+		Count(&count).
 		Scan(&plans).Error; err != nil {
 		return nil, "", err
 	}

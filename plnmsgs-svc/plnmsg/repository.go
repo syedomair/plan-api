@@ -61,14 +61,15 @@ func (repo *PlanMessageRepository) GetAll(limit string, offset string, orderby s
 	count := "0"
 	if err := repo.Db.Table("plan_messages").
 		Select("*").
-		Count(&count).
 		Limit(limit).
 		Offset(offset).
 		Order(orderby+" "+sort).
 		Where("plan_id = ?", planId).
+		Count(&count).
 		Scan(&planMessages).Error; err != nil {
 		return nil, "", err
 	}
+
 	repo.Logger.Log("METHOD", "GetAll", "SPOT", "method end", "time_spent", time.Since(start))
 	return planMessages, count, nil
 }

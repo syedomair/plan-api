@@ -26,10 +26,10 @@ func (repo *UserRepository) GetAll(limit string, offset string, orderby string, 
 	count := "0"
 	if err := repo.Db.Table("users").
 		Select("*").
-		Count(&count).
 		Limit(limit).
 		Offset(offset).
 		Order(orderby + " " + sort).
+		Count(&count).
 		Scan(&users).Error; err != nil {
 		return nil, "", err
 	}
