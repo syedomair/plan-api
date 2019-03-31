@@ -40,4 +40,5 @@ const (
 	InValidPlanMessageBlank       = ""
 	ValidPlanMessageAction        = "COST_UPDATE"
 	InValidPlanMessageActionBlank = ""
+	Token                         = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXJyZW50X3VzZXJfaWQiOiJiZWYxN2M2YS1jMDNiLTQ5ZmUtYmUzZi1lOWU0NTRjYzMwMWUiLCJmaXJzdF9uYW1lIjoiSm9obiIsImxhc3RfbmFtZSI6IlNtaXRoIiwiZW1haWwiOiJlbWFpbF8xNTU0MDAyOTM5OTA0MDE1MzAwQGdtYWlsLmNvbSIsImNyZWF0ZWRfYXQiOjE1NTQwMDI5Mzk5MTc0MTI0NzgsImlzcyI6IlNZRURPTUFJUiJ9.8K0fcQA4eqlPXrBNtLsgXVPgvesMr2jcbmrB4uMp42Y"
 )

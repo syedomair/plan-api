@@ -7,16 +7,17 @@ import (
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/http/httptest"
 	"reflect"
 	"strconv"
-
-	"github.com/syedomair/plan-api/models"
 
 	jwt "github.com/dgrijalva/jwt-go"
 	log "github.com/go-kit/kit/log"
 	validation "github.com/go-ozzo/ozzo-validation"
 	"github.com/go-ozzo/ozzo-validation/is"
 	"github.com/gorilla/mux"
+	"github.com/syedomair/plan-api/models"
+	"github.com/syedomair/plan-api/test/testdata"
 )
 
 type CommonService struct {
@@ -69,6 +70,15 @@ func (c CommonService) commonResponse(class interface{}, result string) []byte {
 	c.response["data"] = class
 	jsonByte, _ := json.Marshal(c.response)
 	return jsonByte
+}
+
+func (c CommonService) MockTestServer(method string, url string, jsonInput []byte) (*httptest.ResponseRecorder, *http.Request) {
+
+	var jsonStr = []byte(jsonInput)
+	req, _ := http.NewRequest(method, url, bytes.NewBuffer(jsonStr))
+	req.Header.Set("Token", testdata.Token)
+	response := httptest.NewRecorder()
+	return response, req
 }
 
 func (c CommonService) ValidateId(id string, fieldName string) error {

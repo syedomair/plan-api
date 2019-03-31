@@ -8,3 +8,8 @@ rul:
 ruh:    
 	go run test/testURL/urlTest.go 
 
+tv:    
+	go test ./... -v
+
+ts:    
+	go test ./... 
