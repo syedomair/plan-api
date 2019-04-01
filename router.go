@@ -207,9 +207,6 @@ func (env *Env) loggerMiddleware(handle http.Handler) http.Handler {
 		if err != nil {
 			env.Logger.Log("METHOD", "loggerMiddleware", "DumpRequest ERR:", err.Error())
 		}
-		testnum := r.Header.Get("Testnum")
-
-		env.Logger.Log("METHOD", "loggerMiddleware", "REQUEST:", "*********** "+testnum+" ***************************************************************************************************************************************")
 		env.Logger.Log("METHOD", "loggerMiddleware", "REQUEST:", string(requestDump))
 		handle.ServeHTTP(w, r)
 
