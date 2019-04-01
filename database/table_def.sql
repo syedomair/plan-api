@@ -53,7 +53,7 @@ INSERT INTO public.plans (id, title, status, validity, cost) VALUES ('7be49965-f
 drop table public.plan_messages CASCADE;
 CREATE TABLE public.plan_messages (
         id                  uuid PRIMARY KEY,
-        plan_id             uuid references public.plans(id),
+        plan_id             uuid references public.plans(id) ON DELETE CASCADE,
         message             varchar(2000) NULL,
         action              varchar(20) NULL,
         created_at          timestamp,
