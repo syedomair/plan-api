@@ -210,7 +210,7 @@ func (c CommonService) ValidateInputParameters(r *http.Request, paramConf map[st
 			case STRING_PASSWORD:
 				if err := validation.Validate(
 					val,
-					validation.Length(6, 32).Error(k+" must be atleast 5 characters long")); err != nil {
+					validation.Length(6, 32).Error(k+" must be atleast 6 characters long")); err != nil {
 					return nil, nil, "115", err
 				}
 			case STRING_NAME:
