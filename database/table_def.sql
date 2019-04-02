@@ -11,7 +11,7 @@ CREATE TABLE public.users (
         created_at          timestamp,
         updated_at          timestamp
 );
-INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f6eebf36-fd66-4a71-a32f-8ea36d4617ef', 'FirstAdmin1', 'LastAdmin1', 'admin@gmail.com', 'MTIzNDU2', 1, '2018-09-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f6eebf36-fd66-4a71-a32f-8ea36d4617ef', 'FirstAdmin', 'LastAdmin', 'admin@gmail.com', 'MTIzNDU2', 1, '2018-09-14');
 INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a72-a32f-8ea36d4617ef', 'FirstAdmin2', 'lastAdmin2', 'admin2@gmail.com', 'MTIzNDU2', 1, '2019-01-14');
 INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a73-a32f-8ea36d4617ef', 'FirstAdmin3', 'lastAdmin3', 'admin3@gmail.com', 'MTIzNDU2', 1, '2019-01-14');
 INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a74-a32f-8ea36d4617ef', 'FirstAdmin4', 'lastAdmin4', 'admin4@gmail.com', 'MTIzNDU2', 1, '2018-06-14');
@@ -25,6 +25,7 @@ INSERT INTO public.users (id, first_name, last_name, email, password, verified, 
 INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a71-a32f-8ea66d4617ef', 'FirstAdmin12', 'lastAdmin12', 'admin12@gmail.com', 'MTIzNDU2', 1, '2018-11-14');
 INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a71-a32f-8ea76d4617ef', 'FirstAdmin13', 'lastAdmin13', 'admin13@gmail.com', 'MTIzNDU2', 1, '2018-11-14');
 INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a71-a32f-8ea86d4617ef', 'FirstAdmin14', 'lastAdmin14', 'admin14@gmail.com', 'MTIzNDU2', 1, '2018-12-14');
+INSERT INTO public.users (id, first_name, last_name, email, password, verified, created_at) VALUES ('f7eebf36-fd66-4a71-a32f-8ea86d4637ef', 'FirstAdmin15', 'lastAdmin15', 'admin15@gmail.com', 'MTIzNDU2', 1, '2019-03-14');
 
 drop table public.users_logins CASCADE;
 CREATE TABLE public.users_logins(
@@ -60,11 +61,50 @@ CREATE TABLE public.plan_messages (
         updated_at          timestamp
 );
 
-INSERT INTO public.plan_messages (id, plan_id, message, action) VALUES ('aeb9844a-b3fb-4df8-b684-7c4cf1f3ce32', 'd107aa5c-9995-47b2-b34a-203ad655b621','Message to notify that plan: #PLAN# cost has been updated. Here is the new cost: #COST#', 'COST_UPDATE');
-INSERT INTO public.plan_messages (id, plan_id, message, action) VALUES ('faada022-40ff-4647-8ef9-542315570d61', 'd107aa5c-9995-47b2-b34a-203ad655b621','Message to notify that plan: #PLAN# validity has been updated. Here is the new validity: #VALIDITY#', 'VALIDITY_UPDATE');
+INSERT INTO public.plan_messages (id, plan_id, message, action) VALUES ('aeb9844a-b3fb-4df8-b684-7c4cf1f3ce32', 'd107aa5c-9995-47b2-b34a-203ad655b621','Dear #USER_FIRST_NAME# #USER_LAST_NAME#,
 
-INSERT INTO public.plan_messages (id, plan_id, message, action) VALUES ('64132a23-1c45-4344-8a8e-4633845a4ace', 'c9de5200-dbad-44b8-b5fc-ab1381730de7','Message to notify that plan: #PLAN# cost has been updated. Here is the new cost: #COST#', 'COST_UPDATE');
-INSERT INTO public.plan_messages (id, plan_id, message, action) VALUES ('7eae9c25-a9f6-4bda-a7ef-a2dd9585a5fc', 'c9de5200-dbad-44b8-b5fc-ab1381730de7','Message to notify that plan: #PLAN# validity has been updated. Here is the new validity: #VALIDITY#', 'VALIDITY_UPDATE');
+The plan #PLAN_NAME# you have subscribed to has a cost changed. 
+The new cost is #COST#.  
 
-INSERT INTO public.plan_messages (id, plan_id, message, action) VALUES ('108f470a-93c3-41e1-a52b-20a3d344f9d6', '7be49965-fc69-4d15-ae53-aebcd7367402','Message to notify that plan: #PLAN# cost has been updated. Here is the new cost: #COST#', 'COST_UPDATE');
-INSERT INTO public.plan_messages (id, plan_id, message, action) VALUES ('3afb692a-26bc-4c78-8f45-554ecf80fbf4', '7be49965-fc69-4d15-ae53-aebcd7367402','Message to notify that plan: #PLAN# validity has been updated. Here is the new validity: #VALIDITY#', 'VALIDITY_UPDATE');
+
+Thanks  ', 'COST_UPDATE');
+INSERT INTO public.plan_messages (id, plan_id, message, action) VALUES ('faada022-40ff-4647-8ef9-542315570d61', 'd107aa5c-9995-47b2-b34a-203ad655b621','Dear #USER_FIRST_NAME# #USER_LAST_NAME#,
+
+The plan #PLAN_NAME# you have subscribed to has a validity changed. 
+The new validity is #VALIDITY#.  
+
+
+Thanks ', 'VALIDITY_UPDATE');
+
+
+INSERT INTO public.plan_messages (id, plan_id, message, action) VALUES ('64132a23-1c45-4344-8a8e-4633845a4ace', 'c9de5200-dbad-44b8-b5fc-ab1381730de7','Dear #USER_FIRST_NAME# #USER_LAST_NAME#,
+
+The plan #PLAN_NAME# you have subscribed to has a cost changed. 
+The new cost is #COST#.  
+
+
+Thanks ', 'COST_UPDATE');
+INSERT INTO public.plan_messages (id, plan_id, message, action) VALUES ('7eae9c25-a9f6-4bda-a7ef-a2dd9585a5fc', 'c9de5200-dbad-44b8-b5fc-ab1381730de7','Dear #USER_FIRST_NAME# #USER_LAST_NAME#,
+
+The plan #PLAN_NAME# you have subscribed to has a validity changed. 
+The new validity is #VALIDITY#.  
+
+
+Thanks ', 'VALIDITY_UPDATE');
+
+
+INSERT INTO public.plan_messages (id, plan_id, message, action) VALUES ('108f470a-93c3-41e1-a52b-20a3d344f9d6', '7be49965-fc69-4d15-ae53-aebcd7367402','Dear #USER_FIRST_NAME# #USER_LAST_NAME#,
+
+The plan #PLAN_NAME# you have subscribed to has a cost changed. 
+The new cost is #COST#.  
+
+
+Thanks ', 'COST_UPDATE');
+INSERT INTO public.plan_messages (id, plan_id, message, action) VALUES ('3afb692a-26bc-4c78-8f45-554ecf80fbf4', '7be49965-fc69-4d15-ae53-aebcd7367402','Dear #USER_FIRST_NAME# #USER_LAST_NAME#,
+
+The plan #PLAN_NAME# you have subscribed to has a validity changed. 
+The new validity is #VALIDITY#.  
+
+
+Thanks ', 'VALIDITY_UPDATE');
+
