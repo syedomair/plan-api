@@ -131,7 +131,7 @@ func (env *Env) NewRouter() *mux.Router {
 		Route{
 			"GetAll",
 			"GET",
-			"/plan-messages/{plan_id}",
+			"/plan-messages/plan/{plan_id}",
 			env.PlanMessageEnv.GetAll,
 			"user",
 		},

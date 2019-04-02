@@ -124,7 +124,7 @@ func main() {
 		//num137 plan-messages Get
 		{"GET", url, "plan-messages", "plan_message_id", "token", ``, lib.SUCCESS, ``},
 		//num138 plan-messages Get ALL
-		{"GET", url, "plan-messages", "plan_id", "token", ``, lib.SUCCESS, ``},
+		{"GET", url, "plan-messages/plan", "plan_id", "token", ``, lib.SUCCESS, ``},
 		//num139 plan-messages delete
 		{"DELETE", url, "plan-messages", "plan_message_id", "token", ``, lib.SUCCESS, ``},
 		//num140 plan delete

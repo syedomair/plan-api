@@ -1,0 +1,550 @@
+{
+	"info": {
+		"_postman_id": "2454bb10-0284-4546-a897-4df2948f7606",
+		"name": "PLAN_API_Test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "http://{{url}}/login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "cb74e6c3-fd6c-4d07-a0d3-8adc4af1572e",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"token\", jsonData.data.token);",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}"
+				},
+				"url": {
+					"raw": "http://{{url}}/login",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{url}}/plans",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "1093189b-9edf-4a25-a97e-e2b2500c5522",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"plan_id\", jsonData.data.plan_id);",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"title\":\"Test Plan\" , \"status\":\"1\"  , \"cost\":\"1999\", \"validity\":\"15\" }"
+				},
+				"url": {
+					"raw": "http://{{url}}/plans",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"plans"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{url}}/plans/{{plan_id}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "a7be98fa-3f9c-4c43-8f61-1c7feae5a67a",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/plans/{{plan_id}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"plans",
+						"{{plan_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{url}}/plans/{{plan_id}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "56da267b-c50b-4088-bbea-30a7fb495ff8",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"title\":\"Test Plan Changed\"}"
+				},
+				"url": {
+					"raw": "http://{{url}}/plans/{{plan_id}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"plans",
+						"{{plan_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{url}}/plans",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e4d02671-c027-40cf-87c0-0447f99631b7",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/plans/{{plan_id}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"plans",
+						"{{plan_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{url}}/plan-messages/{{plan_id}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5dcc9a14-fb00-4ff8-bb06-26475a90d754",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"plan_msg_id\", jsonData.data.plan_message_id);",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "token",
+						"value": "{{token}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"message\":\"Test Message\" , \"action\":\"COST_UPDATE\" }"
+				},
+				"url": {
+					"raw": "http://{{url}}/plan-messages/{{plan_id}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"plan-messages",
+						"{{plan_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{url}}/plan-messages/plan/{{plan_id}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5dcc9a14-fb00-4ff8-bb06-26475a90d754",
+						"exec": [
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/plan-messages/plan/{{plan_id}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"plan-messages",
+						"plan",
+						"{{plan_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{url}}/plan-messages/{{plan_msg_id}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5dcc9a14-fb00-4ff8-bb06-26475a90d754",
+						"exec": [
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"message\":\"Test Message Changed\", \"action\":\"COST_UPDATE\" }"
+				},
+				"url": {
+					"raw": "http://{{url}}/plan-messages/{{plan_msg_id}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"plan-messages",
+						"{{plan_msg_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{url}}/plan-messages/{{plan_msg_id}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5dcc9a14-fb00-4ff8-bb06-26475a90d754",
+						"exec": [
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/plan-messages/{{plan_msg_id}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"plan-messages",
+						"{{plan_msg_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{url}}/plan-messages/{{plan_msg_id}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "f3de00ec-304a-42bc-a147-cc8ed91953c2",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/plan-messages/{{plan_msg_id}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"plan-messages",
+						"{{plan_msg_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "http://{{url}}/plans/{{plan_id}}",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "940fc7a9-1018-4315-b200-1f94b34f2fb2",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "token",
+						"type": "text",
+						"value": "{{token}}"
+					},
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://{{url}}/plans/{{plan_id}}",
+					"protocol": "http",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"plans",
+						"{{plan_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
