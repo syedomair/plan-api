@@ -6,7 +6,7 @@ import (
 
 	"github.com/syedomair/plan-api/lib"
 	"github.com/syedomair/plan-api/models"
-	planPkg "github.com/syedomair/plan-api/plans-svc/plan"
+	planPkg "github.com/syedomair/plan-api/services/plans-svc/plan"
 	testdata "github.com/syedomair/plan-api/test/testdata"
 )
 

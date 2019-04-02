@@ -13,3 +13,6 @@ tv:
 
 ts:    
 	go test ./... 
+
+tr:
+	go test ./... -race
