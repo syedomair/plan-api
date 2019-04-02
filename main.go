@@ -10,11 +10,11 @@ import (
 
 	"github.com/gorilla/handlers"
 	lib "github.com/syedomair/plan-api/lib"
-	plan "github.com/syedomair/plan-api/plans-svc/plan"
-	planMessage "github.com/syedomair/plan-api/plnmsgs-svc/plnmsg"
-	public "github.com/syedomair/plan-api/public-svc/public"
-	stat "github.com/syedomair/plan-api/stats-svc/stat"
-	user "github.com/syedomair/plan-api/users-svc/user"
+	plan "github.com/syedomair/plan-api/services/plans-svc/plan"
+	planMessage "github.com/syedomair/plan-api/services/plnmsgs-svc/plnmsg"
+	public "github.com/syedomair/plan-api/services/public-svc/public"
+	stat "github.com/syedomair/plan-api/services/stats-svc/stat"
+	user "github.com/syedomair/plan-api/services/users-svc/user"
 )
 
 type Env struct {
