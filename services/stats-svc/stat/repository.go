@@ -38,14 +38,16 @@ func (repo *StatRepository) GetTotalUserCount() (string, error) {
 
 	start := time.Now()
 	repo.Logger.Log("METHOD", "GetTotalUserCount", "SPOT", "method start", "time_start", start)
-	count := "0"
-	if err := repo.Db.Table("users").
-		Select("*").
-		Count(&count).Error; err != nil {
+	type Result struct {
+		Count string
+	}
+	var result Result
+	if err := repo.Db.Raw("select total_user as count from stat ").Scan(&result).Error; err != nil {
 		return "", err
 	}
+
 	repo.Logger.Log("METHOD", "GetTotalUserCount", "SPOT", "method end", "time_spent", time.Since(start))
-	return count, nil
+	return result.Count, nil
 }
 
 func (repo *StatRepository) GetUserRegData() ([]*models.StatUserRegPerMonth, error) {
@@ -67,14 +69,15 @@ func (repo *StatRepository) GetPlanData() (string, error) {
 
 	start := time.Now()
 	repo.Logger.Log("METHOD", "GetPlanData", "SPOT", "method start", "time_start", start)
-	count := "0"
-	if err := repo.Db.Table("plans").
-		Select("*").
-		Count(&count).Error; err != nil {
+
+	type Result struct {
+		Count string
+	}
+	var result Result
+	if err := repo.Db.Raw("select total_plan as count from stat ").Scan(&result).Error; err != nil {
 		return "", err
 	}
-
 	repo.Logger.Log("METHOD", "GetPlanData", "SPOT", "method end", "time_spent", time.Since(start))
 
-	return count, nil
+	return result.Count, nil
 }

@@ -138,3 +138,7 @@ func (mdb *mockRepo) FindToken(token string) (models.UsersLogin, error) {
 	userLogin := models.UsersLogin{}
 	return userLogin, nil
 }
+
+func (mdb *mockRepo) IncrementUserCount() error {
+	return nil
+}

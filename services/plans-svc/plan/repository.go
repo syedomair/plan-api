@@ -17,6 +17,8 @@ type PlanRepositoryInterface interface {
 	Get(planId string) (*models.Plan, error)
 	Update(inputPlan map[string]interface{}, planId string) error
 	Delete(plan models.Plan) error
+	IncrementPlanCount() error
+	DecrementPlanCount() error
 }
 
 type PlanRepository struct {
@@ -65,6 +67,48 @@ func (repo *PlanRepository) Create(inputPlan map[string]interface{}) (string, er
 	return planId, nil
 }
 
+func (repo *PlanRepository) IncrementPlanCount() error {
+	repo.Logger.Log("METHOD", "IncrementPlanCount", "SPOT", "METHOD START")
+	start := time.Now()
+
+	type Result struct {
+		Count string
+	}
+	var result Result
+	if err := repo.Db.Raw("select total_plan as count from stat ").Scan(&result).Error; err != nil {
+		return err
+	}
+
+	planCount, _ := strconv.Atoi(result.Count)
+
+	if err := repo.Db.Table("stat").Updates(map[string]interface{}{"total_plan": planCount + 1}).Error; err != nil {
+		return err
+	}
+
+	repo.Logger.Log("METHOD", "IncrementPlanCount", "SPOT", "METHOD END", "time_spent", time.Since(start))
+	return nil
+}
+func (repo *PlanRepository) DecrementPlanCount() error {
+	repo.Logger.Log("METHOD", "DecrementPlanCount", "SPOT", "METHOD START")
+	start := time.Now()
+
+	type Result struct {
+		Count string
+	}
+	var result Result
+	if err := repo.Db.Raw("select total_plan as count from stat ").Scan(&result).Error; err != nil {
+		return err
+	}
+
+	planCount, _ := strconv.Atoi(result.Count)
+
+	if err := repo.Db.Table("stat").Updates(map[string]interface{}{"total_plan": planCount - 1}).Error; err != nil {
+		return err
+	}
+
+	repo.Logger.Log("METHOD", "DecrementPlanCount", "SPOT", "METHOD END", "time_spent", time.Since(start))
+	return nil
+}
 func (repo *PlanRepository) GetAll(limit string, offset string, orderby string, sort string) ([]*models.Plan, string, error) {
 
 	start := time.Now()

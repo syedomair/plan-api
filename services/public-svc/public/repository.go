@@ -4,6 +4,7 @@ import (
 	b64 "encoding/base64"
 	"errors"
 	"math/rand"
+	"strconv"
 	"time"
 
 	log "github.com/go-kit/kit/log"
@@ -18,6 +19,7 @@ type PublicRepositoryInterface interface {
 	CreateUserLogin(userId string, token string) error
 	ValidateEmailPasswordFromDB(email string, password string) (*models.User, error)
 	FindToken(token string) (models.UsersLogin, error)
+	IncrementUserCount() error
 }
 
 type PublicRepository struct {
@@ -113,6 +115,27 @@ func (repo *PublicRepository) FindToken(token string) (models.UsersLogin, error)
 	return usersLogin, nil
 }
 
+func (repo *PublicRepository) IncrementUserCount() error {
+	repo.Logger.Log("METHOD", "IncrementUserCount", "SPOT", "METHOD START")
+	start := time.Now()
+
+	type Result struct {
+		Count string
+	}
+	var result Result
+	if err := repo.Db.Raw("select total_user as count from stat ").Scan(&result).Error; err != nil {
+		return err
+	}
+
+	userCount, _ := strconv.Atoi(result.Count)
+
+	if err := repo.Db.Table("stat").Updates(map[string]interface{}{"total_user": userCount + 1}).Error; err != nil {
+		return err
+	}
+
+	repo.Logger.Log("METHOD", "IncrementUserCount", "SPOT", "METHOD END", "time_spent", time.Since(start))
+	return nil
+}
 func (repo *PublicRepository) GenerateApiKey() string {
 	var letter = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
 

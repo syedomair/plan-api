@@ -58,6 +58,12 @@ func (env *PublicEnv) Register(w http.ResponseWriter, r *http.Request) {
 	}
 	env.Logger.Log("METHOD", "Register", "SPOT", "Register", "userId", user.Id)
 
+	err = env.PublicRepo.IncrementUserCount()
+	if err != nil {
+		env.Common.ErrorResponseHelper(w, "1002", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
+		return
+	}
+
 	signedJwtToken := createUserToken(user)
 	responseToken := map[string]string{"token": signedJwtToken}
 	err = env.PublicRepo.CreateUserLogin(user.Id, signedJwtToken)

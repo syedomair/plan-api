@@ -34,6 +34,12 @@ CREATE TABLE public.users_logins(
         created_at          timestamp
 );
 
+drop table public.stat ;
+CREATE TABLE public.stat(
+        total_user          integer NULL DEFAULT 0,
+        total_plan          integer NULL DEFAULT 0
+);
+INSERT INTO public.stat (total_user, total_plan) VALUES (15, 3);
 
 drop table public.plans CASCADE;
 CREATE TABLE public.plans(
