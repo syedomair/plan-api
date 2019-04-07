@@ -111,31 +111,33 @@ func main() {
 		{"PATCH", url, "plans", "plan_id", "token", `{"title":"` + testdata.ValidPlanTitle + `" , "status":"` + testdata.ValidPlanStatus + `"  , "cost":"` + testdata.ValidPlanCost + `", "validity":"` + testdata.ValidPlanValidity + `" }`, lib.SUCCESS, ``},
 		//num131 GET ALL
 		{"GET", url, "plans", "", "token", ``, lib.SUCCESS, ``},
-		//num132 GET
+		//num132 GET ALL Plan Notifications
+		{"GET", url, "plans/notifications", "", "token", ``, lib.SUCCESS, ``},
+		//num133 GET
 		{"GET", url, "plans", "plan_id", "token", ``, lib.SUCCESS, ``},
-		//num133 plan-messages invalid message
+		//num134 plan-messages invalid message
 		{"POST", url, "plan-messages", "plan_id", "token", `{"message":"` + testdata.InValidPlanMessageBlank + `" , "action":"` + testdata.ValidPlanMessageAction + `" }`, lib.FAILURE, ``},
-		//num134 plan-messages invalid action
+		//num135 plan-messages invalid action
 		{"POST", url, "plan-messages", "plan_id", "token", `{"message":"` + testdata.ValidPlanMessage + `" , "action":"` + testdata.InValidPlanMessageActionBlank + `" }`, lib.FAILURE, ``},
-		//num135 plan-messages all good
+		//num136 plan-messages all good
 		{"POST", url, "plan-messages", "plan_id", "token", `{"message":"` + testdata.ValidPlanMessage + `" , "action":"` + testdata.ValidPlanMessageAction + `" }`, lib.SUCCESS, ``},
-		//num136 plan-messages Update
+		//num137 plan-messages Update
 		{"PATCH", url, "plan-messages", "plan_message_id", "token", `{"message":"` + testdata.ValidPlanMessage + `" , "action":"` + testdata.ValidPlanMessageAction + `" }`, lib.SUCCESS, ``},
-		//num137 plan-messages Get
+		//num138 plan-messages Get
 		{"GET", url, "plan-messages", "plan_message_id", "token", ``, lib.SUCCESS, ``},
-		//num138 plan-messages Get ALL
+		//num139 plan-messages Get ALL
 		{"GET", url, "plan-messages/plan", "plan_id", "token", ``, lib.SUCCESS, ``},
-		//num139 plan-messages delete
+		//num140 plan-messages delete
 		{"DELETE", url, "plan-messages", "plan_message_id", "token", ``, lib.SUCCESS, ``},
-		//num140 plan delete
+		//num141 plan delete
 		{"DELETE", url, "plans", "plan_id", "token", ``, lib.SUCCESS, ``},
-		//num141 stats total user count
+		//num142 stats total user count
 		{"GET", url, "stats/user-count", "", "token", ``, lib.SUCCESS, ``},
-		//num142 stats total user count last 30 days
+		//num143 stats total user count last 30 days
 		{"GET", url, "stats/user-count-30-days", "", "token", ``, lib.SUCCESS, ``},
-		//num143 stats user registration data
+		//num144 stats user registration data
 		{"GET", url, "stats/user-reg-data", "", "token", ``, lib.SUCCESS, ``},
-		//num144 stats plan data
+		//num145 stats plan data
 		{"GET", url, "stats/plan-data", "", "token", ``, lib.SUCCESS, ``},
 		/*
 		 */

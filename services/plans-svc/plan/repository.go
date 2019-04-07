@@ -16,6 +16,7 @@ import (
 type PlanRepositoryInterface interface {
 	Create(inputPlan map[string]interface{}) (string, error)
 	GetAll(limit string, offset string, orderby string, sort string) ([]*models.Plan, string, error)
+	GetPlanNotification(limit string, offset string, orderby string, sort string) ([]*models.Notification, string, error)
 	Get(planId string) (*models.Plan, error)
 	Update(inputPlan map[string]interface{}, planId string) error
 	Delete(plan models.Plan) error
@@ -262,4 +263,23 @@ func (repo *PlanRepository) createNotificationLog(notificationId string, errorSt
 
 	repo.Logger.Log("METHOD", "createNotificationLog", "SPOT", "method end", "time_spent", time.Since(start))
 	return notificationLogId, nil
+}
+func (repo *PlanRepository) GetPlanNotification(limit string, offset string, orderby string, sort string) ([]*models.Notification, string, error) {
+
+	start := time.Now()
+	repo.Logger.Log("METHOD", "GetPlanNotification", "SPOT", "method start", "time_start", start)
+	var notifications []*models.Notification
+	count := "0"
+	if err := repo.Db.Table("notifications").
+		Select("*").
+		Limit(limit).
+		Offset(offset).
+		Order("notifications."+orderby+" "+sort).
+		Where("object = ?", "Plan").
+		Count(&count).
+		Scan(&notifications).Error; err != nil {
+		return nil, "", err
+	}
+	repo.Logger.Log("METHOD", "GetPlanNotification", "SPOT", "method end", "time_spent", time.Since(start))
+	return notifications, count, nil
 }

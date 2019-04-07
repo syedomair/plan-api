@@ -172,4 +172,28 @@ func (env *PlanEnv) Delete(w http.ResponseWriter, r *http.Request) {
 	env.Common.SuccessResponseHelper(w, responsePlanId, http.StatusOK)
 }
 
-//VIM command to serializing error code :let @a=3001 | %s/\d\d\d\d/\=''.(@a+setreg('a',@a+1))/g
+func (env *PlanEnv) GetPlanNotification(w http.ResponseWriter, r *http.Request) {
+
+	start := time.Now()
+	env.Logger.Log("METHOD", "GetPlanNotification", "SPOT", "method start", "time_start", start)
+
+	_, err := env.Common.GetUserClientFromToken(r)
+	if err != nil {
+		env.Common.ErrorResponseHelper(w, "3014", err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	limit, offset, orderby, sort, err := env.Common.ValidateQueryString(r, "100", "0", "created_at", "asc")
+	if err != nil {
+		env.Common.ErrorResponseHelper(w, "3015", err.Error(), http.StatusBadRequest)
+		return
+	}
+	notifications, count, err := env.PlanRepo.GetPlanNotification(limit, offset, orderby, sort)
+	if err != nil {
+		env.Common.ErrorResponseHelper(w, "3016", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
+	}
+	env.Logger.Log("METHOD", "GetPlanNotification", "SPOT", "method end", "time_spent", time.Since(start))
+	env.Common.SuccessResponseList(w, notifications, offset, limit, count)
+}
+
+//VIM command to serializing error code :let @a=3017 | %s/\d\d\d\d/\=''.(@a+setreg('a',@a+1))/g

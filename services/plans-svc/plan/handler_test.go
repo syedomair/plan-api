@@ -270,6 +270,23 @@ func TestGetAll(t *testing.T) {
 	}
 }
 
+func TestGetPlanNotification(t *testing.T) {
+	env := PlanEnv{Logger: lib.GetLogger(), PlanRepo: &mockRepo{}, Common: lib.CommonService{Logger: lib.GetLogger()}}
+	method := "GET"
+	url := "/plans/notifications"
+	var blankByte []byte
+
+	//ALL GOOD
+	res, req := env.Common.MockTestServer(method, url, blankByte)
+	env.GetPlanNotification(res, req)
+	response := new(models.TestResponse)
+	json.NewDecoder(res.Result().Body).Decode(response)
+	expected := testdata.SUCCESS
+	if expected != response.Result {
+		t.Errorf("\n...expected = %v\n...obtained = %v", expected, response.Result)
+	}
+}
+
 type mockRepo struct {
 }
 
@@ -279,6 +296,10 @@ func (mdb *mockRepo) Create(inputPlan map[string]interface{}) (string, error) {
 func (mdb *mockRepo) GetAll(limit string, offset string, orderby string, sort string) ([]*models.Plan, string, error) {
 	var plans []*models.Plan
 	return plans, "0", nil
+}
+func (mdb *mockRepo) GetPlanNotification(limit string, offset string, orderby string, sort string) ([]*models.Notification, string, error) {
+	var notifications []*models.Notification
+	return notifications, "0", nil
 }
 func (mdb *mockRepo) Get(planId string) (*models.Plan, error) {
 	plan := models.Plan{}

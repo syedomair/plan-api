@@ -100,6 +100,13 @@ func (env *Env) NewRouter() *mux.Router {
 			"user",
 		},
 		Route{
+			"GetPlanNotification",
+			"GET",
+			"/plans/notifications",
+			env.PlanEnv.GetPlanNotification,
+			"user",
+		},
+		Route{
 			"Get",
 			"GET",
 			"/plans/{plan_id}",
