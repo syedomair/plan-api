@@ -74,8 +74,8 @@ func (repo *UserRepository) GetAllBatch(limit string, offset string, orderby str
 	chBatchTaskId := make(chan string)
 	go func(batchTaskId string) { chBatchTaskId <- batchTaskId }(batchTaskId)
 	go func(batchTaskId string) {
-		//to simulate large processing by putting timer for 5 sec
-		time.Sleep(5 * time.Second)
+		//to simulate large processing by putting timer for 10 sec
+		time.Sleep(10 * time.Second)
 		users, _, _ := repo.GetAll(limit, offset, orderby, sort)
 		responseDataJson, _ := json.Marshal(users)
 		repo.Db.Table("batch_tasks").Where("id = ?", batchTaskId).Updates(map[string]interface{}{"status": 1, "data": responseDataJson, "completed_at": time.Now().Format(time.RFC3339)})
