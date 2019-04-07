@@ -53,7 +53,21 @@ func (env *Env) NewRouter() *mux.Router {
 			"GET",
 			"/users",
 			env.UserEnv.GetAll,
-			"admin",
+			"user",
+		},
+		Route{
+			"UserGetAllBatch",
+			"GET",
+			"/users/batch",
+			env.UserEnv.GetAllBatch,
+			"user",
+		},
+		Route{
+			"GetBatchTask",
+			"GET",
+			"/batch-tasks/{batch_task_id}",
+			env.UserEnv.GetBatchTask,
+			"user",
 		},
 		//Stat
 		Route{
@@ -61,28 +75,28 @@ func (env *Env) NewRouter() *mux.Router {
 			"GET",
 			"/stats/user-count",
 			env.StatEnv.GetTotalUserCount,
-			"admin",
+			"user",
 		},
 		Route{
 			"GetTotalUserCountLast30Days,",
 			"GET",
 			"/stats/user-count-30-days",
 			env.StatEnv.GetTotalUserCountLast30Days,
-			"admin",
+			"user",
 		},
 		Route{
 			"GetUserRegData,",
 			"GET",
 			"/stats/user-reg-data",
 			env.StatEnv.GetUserRegData,
-			"admin",
+			"user",
 		},
 		Route{
 			"GetPlanData,",
 			"GET",
 			"/stats/plan-data",
 			env.StatEnv.GetPlanData,
-			"admin",
+			"user",
 		},
 		//Plan
 		Route{

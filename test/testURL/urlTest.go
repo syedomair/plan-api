@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"os/exec"
 	"strconv"
 	"strings"
 	"time"
@@ -87,58 +86,64 @@ func main() {
 		{"POST", url, "login", "", "", `{"email":"` + uniqueEmail + `.eu", "password":"` + testdata.ValidPassword + `"}`, lib.SUCCESS, ``},
 		//num119 GET ALL User
 		{"GET", url, "users", "", "token", ``, lib.SUCCESS, ``},
-		//num120 Plan invalid title
+		//num120 GET ALL User Batch
+		{"GET", url, "users/batch", "", "token", ``, lib.SUCCESS, ``},
+		//num121 Plan invalid title
 		{"POST", url, "plans", "", "token", `{"title":"` + testdata.InValidLenPlanTitle + `" , "status":"` + testdata.ValidPlanStatus + `"  , "cost":"` + testdata.ValidPlanCost + `", "validity":"` + testdata.ValidPlanValidity + `" }`, lib.FAILURE, ``},
-		//num121 Plan invalid title blank
+		//num122 Plan invalid title blank
 		{"POST", url, "plans", "", "token", `{"title":"` + testdata.InValidPlanTitleBlank + `" , "status":"` + testdata.ValidPlanStatus + `"  , "cost":"` + testdata.ValidPlanCost + `", "validity":"` + testdata.ValidPlanValidity + `" }`, lib.FAILURE, ``},
-		//num122 Plan invalid cost
+		//num123 Plan invalid cost
 		{"POST", url, "plans", "", "token", `{"title":"` + testdata.ValidPlanTitle + `" , "status":"` + testdata.ValidPlanStatus + `"  , "cost":"` + testdata.InValidPlanCost + `", "validity":"` + testdata.ValidPlanValidity + `" }`, lib.FAILURE, ``},
-		//num123 Plan invalid cost blank
+		//num124 Plan invalid cost blank
 		{"POST", url, "plans", "", "token", `{"title":"` + testdata.ValidPlanTitle + `" , "status":"` + testdata.ValidPlanStatus + `"  , "cost":"` + testdata.InValidPlanCostBlank + `", "validity":"` + testdata.ValidPlanValidity + `" }`, lib.FAILURE, ``},
-		//num124 Plan invalid validity
+		//num125 Plan invalid validity
 		{"POST", url, "plans", "", "token", `{"title":"` + testdata.ValidPlanTitle + `" , "status":"` + testdata.ValidPlanStatus + `"  , "cost":"` + testdata.ValidPlanCost + `", "validity":"` + testdata.InValidPlanValidity + `" }`, lib.FAILURE, ``},
-		//num125 Plan invalid validity blank
+		//num126 Plan invalid validity blank
 		{"POST", url, "plans", "", "token", `{"title":"` + testdata.ValidPlanTitle + `" , "status":"` + testdata.ValidPlanStatus + `"  , "cost":"` + testdata.InValidPlanCostBlank + `", "validity":"` + testdata.InValidPlanValidityBlank + `" }`, lib.FAILURE, ``},
-		//num126 Plan invalid status
+		//num127 Plan invalid status
 		{"POST", url, "plans", "", "token", `{"title":"` + testdata.ValidPlanTitle + `" , "status":"` + testdata.InValidPlanStatus + `"  , "cost":"` + testdata.ValidPlanCost + `", "validity":"` + testdata.ValidPlanValidity + `" }`, lib.FAILURE, ``},
-		//num127 Plan invalid status blank
+		//num128 Plan invalid status blank
 		{"POST", url, "plans", "", "token", `{"title":"` + testdata.ValidPlanTitle + `" , "status":"` + testdata.InValidPlanStatusBlank + `"  , "cost":"` + testdata.ValidPlanCost + `", "validity":"` + testdata.ValidPlanValidity + `" }`, lib.FAILURE, ``},
-		//num128 Plan all good
+		//num129 Plan all good
 		{"POST", url, "plans", "", "token", `{"title":"` + testdata.ValidPlanTitle + `" , "status":"` + testdata.ValidPlanStatus + `"  , "cost":"` + testdata.ValidPlanCost + `", "validity":"` + testdata.ValidPlanValidity + `" }`, lib.SUCCESS, ``},
-		//num129 Update invalid cost
+		//num130 Update invalid cost
 		{"PATCH", url, "plans", "plan_id", "token", `{"title":"` + testdata.ValidPlanTitle + `" , "status":"` + testdata.ValidPlanStatus + `"  , "cost":"` + testdata.InValidPlanCost + `", "validity":"` + testdata.ValidPlanValidity + `" }`, lib.FAILURE, ``},
-		//num130 Update valid cost
+		//num131 Update valid cost
 		{"PATCH", url, "plans", "plan_id", "token", `{"title":"` + testdata.ValidPlanTitle + `" , "status":"` + testdata.ValidPlanStatus + `"  , "cost":"` + testdata.ValidPlanCost + `", "validity":"` + testdata.ValidPlanValidity + `" }`, lib.SUCCESS, ``},
-		//num131 GET ALL
+		//num132 GET ALL
 		{"GET", url, "plans", "", "token", ``, lib.SUCCESS, ``},
-		//num132 GET ALL Plan Notifications
+		//num133 GET ALL Plan Notifications
 		{"GET", url, "plans/notifications", "", "token", ``, lib.SUCCESS, ``},
-		//num133 GET
+		//num134 GET
 		{"GET", url, "plans", "plan_id", "token", ``, lib.SUCCESS, ``},
-		//num134 plan-messages invalid message
+		//num135 plan-messages invalid message
 		{"POST", url, "plan-messages", "plan_id", "token", `{"message":"` + testdata.InValidPlanMessageBlank + `" , "action":"` + testdata.ValidPlanMessageAction + `" }`, lib.FAILURE, ``},
-		//num135 plan-messages invalid action
+		//num136 plan-messages invalid action
 		{"POST", url, "plan-messages", "plan_id", "token", `{"message":"` + testdata.ValidPlanMessage + `" , "action":"` + testdata.InValidPlanMessageActionBlank + `" }`, lib.FAILURE, ``},
-		//num136 plan-messages all good
+		//num137 plan-messages all good
 		{"POST", url, "plan-messages", "plan_id", "token", `{"message":"` + testdata.ValidPlanMessage + `" , "action":"` + testdata.ValidPlanMessageAction + `" }`, lib.SUCCESS, ``},
-		//num137 plan-messages Update
+		//num138 plan-messages Update
 		{"PATCH", url, "plan-messages", "plan_message_id", "token", `{"message":"` + testdata.ValidPlanMessage + `" , "action":"` + testdata.ValidPlanMessageAction + `" }`, lib.SUCCESS, ``},
-		//num138 plan-messages Get
+		//num139 plan-messages Get
 		{"GET", url, "plan-messages", "plan_message_id", "token", ``, lib.SUCCESS, ``},
-		//num139 plan-messages Get ALL
+		//num140 plan-messages Get ALL
 		{"GET", url, "plan-messages/plan", "plan_id", "token", ``, lib.SUCCESS, ``},
-		//num140 plan-messages delete
+		//num141 plan-messages delete
 		{"DELETE", url, "plan-messages", "plan_message_id", "token", ``, lib.SUCCESS, ``},
-		//num141 plan delete
+		//num142 plan delete
 		{"DELETE", url, "plans", "plan_id", "token", ``, lib.SUCCESS, ``},
-		//num142 stats total user count
+		//num143 stats total user count
 		{"GET", url, "stats/user-count", "", "token", ``, lib.SUCCESS, ``},
-		//num143 stats total user count last 30 days
+		//num144 stats total user count last 30 days
 		{"GET", url, "stats/user-count-30-days", "", "token", ``, lib.SUCCESS, ``},
-		//num144 stats user registration data
+		//num145 stats user registration data
 		{"GET", url, "stats/user-reg-data", "", "token", ``, lib.SUCCESS, ``},
-		//num145 stats plan data
+		//num146 stats plan data
 		{"GET", url, "stats/plan-data", "", "token", ``, lib.SUCCESS, ``},
+		//num147 stats plan data
+		{"GET", url, "batch-tasks", "batch_task_id", "token", ``, lib.SUCCESS, ``},
+		//num148 stats plan data
+		{"GET", url, "batch-tasks", "batch_task_id", "token", ``, lib.SUCCESS, ``},
 		/*
 		 */
 	}
@@ -146,12 +151,19 @@ func main() {
 	token := ""
 	planId := ""
 	planMessageId := ""
+	batchTaskId := ""
 	for _, testCase := range testCases {
+
+		if i == 148 { //to allow batch processes to complete
+			time.Sleep(5 * time.Second)
+		}
 		url := ""
 		if testCase.pathParam == "plan_id" {
 			url = testCase.url + testCase.path + "/" + planId
 		} else if testCase.pathParam == "plan_message_id" {
 			url = testCase.url + testCase.path + "/" + planMessageId
+		} else if testCase.pathParam == "batch_task_id" {
+			url = testCase.url + testCase.path + "/" + batchTaskId
 		} else {
 			url = testCase.url + testCase.path
 		}
@@ -209,21 +221,16 @@ func main() {
 			planMessageId = string(bytes.Trim(jsonPlanMessageId, `"`))
 			fmt.Println("planMessageId:", planMessageId)
 		}
+		if testCase.method == "GET" && testCase.path == "users/batch" && testCase.responseResult == lib.SUCCESS {
+			var planMessageIdInterface map[string]interface{}
+			json.Unmarshal(jsonData, &planMessageIdInterface)
+			jsonPlanMessageId, _ := json.Marshal(planMessageIdInterface["batch_task_id"])
+			batchTaskId = string(bytes.Trim(jsonPlanMessageId, `"`))
+			fmt.Println("batchTaskId:", batchTaskId)
+		}
 
 		fmt.Println("---------------------------------------------------------------------------")
 
 		i++
 	}
-}
-
-func minikubeServiceURL(serviceName string) (string, error) {
-	minikube := "minikube"
-	service := "service"
-	url := "--url"
-
-	serviceURL, err := exec.Command(minikube, service, serviceName, url).Output()
-	if err != nil {
-		return "", err
-	}
-	return strings.Trim(string(serviceURL), "\n"), nil
 }

@@ -59,6 +59,18 @@ CREATE TABLE public.notification_logs(
         created_at          timestamp
 );
 
+
+drop table public.batch_tasks CASCADE;
+CREATE TABLE public.batch_tasks (
+        id                  uuid PRIMARY KEY,
+        api_name            varchar(100) NULL,
+        status              smallint NULL,
+        data                TEXT NULL,
+        created_at          timestamp,
+        completed_at        timestamp NULL
+);
+
+
 drop table public.plans CASCADE;
 CREATE TABLE public.plans(
         id                  uuid PRIMARY KEY,
