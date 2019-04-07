@@ -2,7 +2,6 @@ package lib
 
 import (
 	"errors"
-	"fmt"
 
 	jwt "github.com/dgrijalva/jwt-go"
 )
@@ -39,9 +38,7 @@ func CheckAuth(tokenString string) (string, error) {
 }
 func GetAPIKey(tokenString string) (string, error) {
 
-	fmt.Println("OMAIR1")
 	token, _ := ValidateJWTToken(tokenString, "")
-	fmt.Println("OMAIR2")
 	claims, ok := token.Claims.(jwt.MapClaims)
 	if !ok {
 		return "", errors.New("Claim error")

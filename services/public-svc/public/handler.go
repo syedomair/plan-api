@@ -24,7 +24,7 @@ func (env *PublicEnv) Ping(w http.ResponseWriter, r *http.Request) {
 	responseToken := map[string]string{"response": "pong"}
 
 	env.Logger.Log("METHOD", "Ping", "SPOT", "METHOD END", "time_spent", time.Since(start))
-	env.Common.SuccessResponseHelper(w, responseToken, http.StatusCreated)
+	env.Common.SuccessResponseHelper(w, responseToken, http.StatusOK)
 }
 
 func (env *PublicEnv) Register(w http.ResponseWriter, r *http.Request) {

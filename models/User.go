@@ -23,11 +23,6 @@ type UserReduced struct {
 	UpdatedAt string `json:"updated_at" gorm:"column:updated_at"`
 }
 
-type UserClient struct {
-	ClientName string `json:"client_name,omitempty"`
-	ApiKey     string `json:"api_key,omitempty"`
-}
-
 func (User) TableName() string {
 	return "users"
 }

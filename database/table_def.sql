@@ -41,6 +41,24 @@ CREATE TABLE public.stat(
 );
 INSERT INTO public.stat (total_user, total_plan) VALUES (15, 3);
 
+drop table public.notifications CASCADE;
+CREATE TABLE public.notifications(
+        id                  uuid PRIMARY KEY,
+        notification_msg    varchar(500) NULL,
+        object              varchar(20) NULL,
+        operation           varchar(20) NULL,
+        created_at          timestamp
+);
+
+drop table public.notification_logs CASCADE;
+CREATE TABLE public.notification_logs(
+        id                  uuid PRIMARY KEY,
+        notification_id     uuid references public.notifications(id) ON DELETE CASCADE,
+        error               varchar(100) NULL,
+        retried_at          timestamp,
+        created_at          timestamp
+);
+
 drop table public.plans CASCADE;
 CREATE TABLE public.plans(
         id                  uuid PRIMARY KEY,
@@ -51,6 +69,8 @@ CREATE TABLE public.plans(
         created_at          timestamp,
         updated_at          timestamp
 );
+
+
 
 INSERT INTO public.plans (id, title, status, validity, cost) VALUES ('d107aa5c-9995-47b2-b34a-203ad655b621', 'Monthly Plan', 1, 30, 9999);
 INSERT INTO public.plans (id, title, status, validity, cost) VALUES ('c9de5200-dbad-44b8-b5fc-ab1381730de7', 'Weekly Plan', 1, 7, 4999);

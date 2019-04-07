@@ -48,14 +48,6 @@ func (env *PlanEnv) CreatePlan(w http.ResponseWriter, r *http.Request) {
 		env.Common.ErrorResponseHelper(w, "3002", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
 	}
 
-	go func() {
-		err = env.PlanRepo.IncrementPlanCount()
-		if err != nil {
-			env.Common.ErrorResponseHelper(w, "3002", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
-			return
-		}
-	}()
-
 	responsePlanId := map[string]string{"plan_id": planId}
 
 	env.Logger.Log("METHOD", "CreatePlan", "SPOT", "METHOD END", "time_spent", time.Since(start))
@@ -175,13 +167,6 @@ func (env *PlanEnv) Delete(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	go func() {
-		err = env.PlanRepo.DecrementPlanCount()
-		if err != nil {
-			env.Common.ErrorResponseHelper(w, "3014", lib.ERROR_UNEXPECTED, http.StatusInternalServerError)
-			return
-		}
-	}()
 	responsePlanId := map[string]string{"plan_id": planId}
 	env.Logger.Log("METHOD", "Delete", "SPOT", "method end", "time_spent", time.Since(start))
 	env.Common.SuccessResponseHelper(w, responsePlanId, http.StatusOK)

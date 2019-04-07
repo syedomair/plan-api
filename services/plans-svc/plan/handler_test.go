@@ -291,9 +291,12 @@ func (mdb *mockRepo) Update(inputPlan map[string]interface{}, planId string) err
 func (mdb *mockRepo) Delete(plan models.Plan) error {
 	return nil
 }
-func (mdb *mockRepo) IncrementPlanCount() error {
-	return nil
+func (mdb *mockRepo) incrementPlanCount() {
+	return
 }
-func (mdb *mockRepo) DecrementPlanCount() error {
-	return nil
+func (mdb *mockRepo) decrementPlanCount() {
+	return
+}
+func (mdb *mockRepo) postPlanNotification(planId string, operation string) {
+	return
 }
