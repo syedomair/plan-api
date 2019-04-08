@@ -10,6 +10,7 @@ It is an example application, which has two parts
 * [CURL Demo](#curl-demo)
 * [Batch Processing](#batch-processing)
 * [JWT Feature](#jwt-feature)
+* [Common Lib](#common-lib)
 * [File Structure](#file-structure)
 
 
@@ -17,6 +18,7 @@ It is an example application, which has two parts
 When the new plan is added to the system, the following things happens asynchronously in the seperate goroutines, which resulted in a non blocking response.   
  * Increment the stat table plan counter.
  * Create a notification record for the plan in the notification table. 
+
 https://github.com/syedomair/plan-api/blob/master/services/plans-svc/plan/repository.go#L72
 
 ## Webhook 
@@ -57,6 +59,7 @@ curl -X GET https://plans-api.herokuapp.com/plans -H 'Token:eyJhbGciOiJIUzI1NiIs
 Batch API is for processing complicated time consuming work. 
 When GET /users/batch is called, it simple a trigger a asynchronous goroutine function and returns a batch_task_id instantanously. 
 Then user call GET batch-tasks/{batch_task_id} if the batch task is not completed, it will return the the status only. If the task is completed, it will return the data. 
+
 https://github.com/syedomair/plan-api/blob/master/services/users-svc/user/repository.go#L56	
 https://github.com/syedomair/plan-api/blob/master/services/users-svc/user/repository.go#L25
 
@@ -72,6 +75,12 @@ On successful login, the system generate the JWT token with the following payloa
 		jwt.StandardClaims
 	}
 ```
+
+## Common Lib
+It contains code for common payload validation, common query string validation and  common response 
+
+https://github.com/syedomair/plan-api/blob/master/lib/common_service.go
+
 
 ## File Structure
 ```
