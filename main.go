@@ -39,11 +39,13 @@ func main() {
 	}
 	fmt.Println("application running on port: " + os.Getenv("PORT"))
 
+	chJob := make(chan string, 100)
+
 	logger := lib.GetLogger()
 	statRepository := &stat.StatRepository{db, logger}
 	publicRepository := &public.PublicRepository{db, logger}
 	userRepository := &user.UserRepository{db, logger}
-	planRepository := &plan.PlanRepository{db, logger}
+	planRepository := &plan.PlanRepository{db, logger, chJob}
 	PlanMessageRepository := &planMessage.PlanMessageRepository{db, logger}
 	commonService := lib.CommonService{Logger: logger}
 

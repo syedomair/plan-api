@@ -33,3 +33,10 @@ func (mdb *mockRepo) GetAll(limit string, offset string, orderby string, sort st
 	var users []*models.UserReduced
 	return users, "0", nil
 }
+func (mdb *mockRepo) GetAllBatch(limit string, offset string, orderby string, sort string) (string, error) {
+	return "0", nil
+}
+func (mdb *mockRepo) GetBatchTask(batchTaskId string) (*models.BatchTask, error) {
+	var batchTask *models.BatchTask
+	return batchTask, nil
+}

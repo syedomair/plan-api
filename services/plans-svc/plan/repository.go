@@ -26,8 +26,9 @@ type PlanRepositoryInterface interface {
 }
 
 type PlanRepository struct {
-	Db     *gorm.DB
-	Logger log.Logger
+	Db        *gorm.DB
+	Logger    log.Logger
+	ChPlanJob chan string
 }
 
 func (repo *PlanRepository) Create(inputPlan map[string]interface{}) (string, error) {
@@ -74,6 +75,7 @@ func (repo *PlanRepository) Create(inputPlan map[string]interface{}) (string, er
 		repo.postPlanNotification(planId, "Create")
 	}(<-chPlanId)
 	repo.Logger.Log("METHOD", "Create", "SPOT", "method end", "time_spent", time.Since(start))
+
 	return planId, nil
 }
 
@@ -144,7 +146,8 @@ func (repo *PlanRepository) postPlanNotification(planId string, operation string
 	ticker := time.NewTicker(10 * time.Second)
 	go func() {
 		for _ = range ticker.C {
-			go lib.PostNotificationToHttpBin("post", planJson, resultCh)
+			repo.ChPlanJob <- "job"
+			go lib.PostNotificationToHttpBin(repo.Logger, "post", planJson, repo.ChPlanJob, resultCh)
 		}
 	}()
 

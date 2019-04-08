@@ -13,7 +13,8 @@ import (
 func TestPlanMsgDB(t *testing.T) {
 
 	db, _ := lib.CreateDBConnection()
-	repoPlan := &planPkg.PlanRepository{db, lib.GetLogger()}
+	chJob := make(chan string, 100)
+	repoPlan := &planPkg.PlanRepository{db, lib.GetLogger(), chJob}
 	defer repoPlan.Db.Close()
 
 	//Create Plan

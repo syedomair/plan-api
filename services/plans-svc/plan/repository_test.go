@@ -12,7 +12,8 @@ import (
 func TestPlanDB(t *testing.T) {
 
 	db, _ := lib.CreateDBConnection()
-	repo := &PlanRepository{db, lib.GetLogger()}
+	chJob := make(chan string, 100)
+	repo := &PlanRepository{db, lib.GetLogger(), chJob}
 	defer repo.Db.Close()
 
 	start := time.Now()
