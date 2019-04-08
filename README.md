@@ -1,8 +1,9 @@
 # [Plan Application](https://plans-admin.herokuapp.com)
 It is an example application, which has two parts 
  * [Plan API](https://plans-api.herokuapp.com): A backend API application developed with Golang. 
- * [Plan Admin Dashboard](https://plans-admin.herokuapp.com): A Frontend application developed with ReactJs and Redux.
+ * [Plan Admin Dashboard](https://plans-admin.herokuapp.com): A Frontend application developed with ReactJs, Redux, and Material-UI.
 
+Test user email/password  admin@gmail.com/123456
 
 ## Plan API Table of Contents
 * [Concurrent Code](#concurrent-code)
@@ -11,6 +12,7 @@ It is an example application, which has two parts
 * [Batch Processing](#batch-processing)
 * [JWT Feature](#jwt-feature)
 * [Common Lib](#common-lib)
+* [Test](#test)
 * [File Structure](#file-structure)
 
 
@@ -18,6 +20,7 @@ It is an example application, which has two parts
 When the new plan is added to the system, the following things happens asynchronously in the seperate goroutines, which resulted in a non blocking response.   
  * Increment the stat table plan counter.
  * Create a notification record for the plan in the notification table. 
+
 
 https://github.com/syedomair/plan-api/blob/master/services/plans-svc/plan/repository.go#L72
 
@@ -60,6 +63,7 @@ Batch API is for processing complicated time consuming work.
 When GET /users/batch is called, it simple a trigger a asynchronous goroutine function and returns a batch_task_id instantanously. 
 Then user call GET batch-tasks/{batch_task_id} if the batch task is not completed, it will return the the status only. If the task is completed, it will return the data. 
 
+
 https://github.com/syedomair/plan-api/blob/master/services/users-svc/user/repository.go#L56	
 https://github.com/syedomair/plan-api/blob/master/services/users-svc/user/repository.go#L25
 
@@ -79,7 +83,21 @@ On successful login, the system generate the JWT token with the following payloa
 ## Common Lib
 It contains code for common payload validation, common query string validation and  common response 
 
+
 https://github.com/syedomair/plan-api/blob/master/lib/common_service.go
+
+
+## Test 
+There are multiple testing options available. 
+ * Check Makefile to see different options
+ * There is a standalone client application, which test every API endpoints   
+
+https://github.com/syedomair/plan-api/blob/master/test/testURL/urlTest.go
+ * Test with Postman environment and collection file are available for local as well as Heroku server   
+
+https://github.com/syedomair/plan-api/tree/master/test/postman 
+
+
 
 
 ## File Structure

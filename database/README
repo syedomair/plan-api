@@ -1,4 +1,7 @@
+
+Command to update local database
 psql -U khalid -d plan < table_def.sql
 
+Command to update Heroku database
 heroku psql < table_def.sql
 
