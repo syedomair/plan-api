@@ -25,9 +25,9 @@ When the new plan is added to the system, the following things happens asynchron
 https://github.com/syedomair/plan-api/blob/master/services/plans-svc/plan/repository.go#L72
 
 ## Webhook 
-On any create or update of Plan notification message is send out asynchronously in the seperate goroutines. Here are the steps: 
+When the Plan is created or updated the notification message is send out asynchronously in the seperate goroutines. Here are the steps: 
  * Create a notification message queue
- * Send out a POST notification message to the httpbin site, which consume queuing element with the span of 2 seconds.  
+ * Send out a POST notification message to the httpbin site (for testing), which consume queuing element with the span of 2 seconds.  
  * Create a record in the notification_log, which store the success/failure of the POST notification message. 
  
 https://github.com/syedomair/plan-api/blob/master/services/plans-svc/plan/repository.go#L150
@@ -59,9 +59,11 @@ curl -X GET https://plans-api.herokuapp.com/plans -H 'Token:eyJhbGciOiJIUzI1NiIs
 
 
 ## Batch Processing
-Batch API is for processing complicated time consuming work. 
-When GET /users/batch is called, it simple a trigger a asynchronous goroutine function and returns a batch_task_id instantanously. 
-Then user call GET batch-tasks/{batch_task_id} if the batch task is not completed, it will return the the status only. If the task is completed, it will return the data. 
+Batch API is for processing complicated time consuming task.
+ 
+When GET /users/batch is called, it simply trigger an asynchronous goroutine function and returns a batch_task_id instantaneously.
+ 
+Then user call GET batch-tasks/{batch_task_id} if the batch task is not completed, it returns the the status only. If the task is completed, it returns the data. 
 
 
 https://github.com/syedomair/plan-api/blob/master/services/users-svc/user/repository.go#L56	
@@ -90,10 +92,10 @@ https://github.com/syedomair/plan-api/blob/master/lib/common_service.go
 ## Test 
 There are multiple testing options available. 
  * Check Makefile to see different options
- * There is a standalone client application, which test every API endpoints   
+ * There is a standalone client application, which tests every API endpoint in the application.   
 
 https://github.com/syedomair/plan-api/blob/master/test/testURL/urlTest.go
- * Test with Postman environment and collection file are available for local as well as Heroku server   
+ * Test with Postman environment and collection files are available for local as well as Heroku server   
 
 https://github.com/syedomair/plan-api/tree/master/test/postman 
 
